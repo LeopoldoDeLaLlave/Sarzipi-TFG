@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const Home = () => {
 
@@ -9,6 +10,9 @@ const Home = () => {
     var pulsado = false;
     const [data, setData] = useState([]);
     const { state, dispatch } = useContext(UserContext);
+
+    //Título de la página
+    const TITLE = 'Sarzipi'
 
     useEffect(() => {
 
@@ -81,7 +85,7 @@ const Home = () => {
 
             }
 
-            pulsado=false;//Al terminar la cción se puede volver a pulsar
+            pulsado = false;//Al terminar la cción se puede volver a pulsar
         }
 
 
@@ -127,11 +131,14 @@ const Home = () => {
 
     return (
         <div className="home">
+            <Helmet>
+                <title>{TITLE}</title>
+            </Helmet>
             {
                 data.map(item => {
                     return (
                         <div className="card home-card" key={item._id}>
-                            <h5><Link to={item.postedBy._id != state._id? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link> {item.postedBy._id == state._id
+                            <h5><Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link> {item.postedBy._id == state._id
                                 && <i className="material-icons" style={{
                                     float: "right"
                                 }}

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../App';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const UserProfile = () => {
+
 
 
     const [userProfile, setUserProfile] = useState(null);
@@ -15,7 +17,7 @@ const UserProfile = () => {
     useEffect(() => {
         setShowFollow(state && !state.following.includes(userid))
     }, state)
-    
+
 
     useEffect(() => {
 
@@ -95,9 +97,12 @@ const UserProfile = () => {
                         margin: "18px 0px",
                         borderBottom: "1px solid grey"
                     }}>
+                        <Helmet>
+                            <title>{userProfile.user.name}</title>
+                        </Helmet>
                         <div>
-                            <img style={{ width: "160px", height: "160px", borderRadius: "80px" }} 
-                            src={userProfile.user.pic} />
+                            <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
+                                src={userProfile.user.pic} />
 
                         </div>
                         <div>

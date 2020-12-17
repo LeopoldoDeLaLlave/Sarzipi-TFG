@@ -1,6 +1,6 @@
 import React, { useEffect, createContext, useReducer, useContext } from 'react'
 import NavBar from './components/Navbar';
-import "./App.css"; 
+import "./App.css";
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 
 import Home from './components/screens/Home';
@@ -17,15 +17,15 @@ export const UserContext = createContext()
 
 const Routing = () => {
   const history = useHistory();
-  const {state, dispatch} = useContext(UserContext);
-  
+  const { state, dispatch } = useContext(UserContext);
+
   //Al cargar la App, si hay una sesión abierta se guarda el usuario
   //En el UserContext y se envía al tl, si no, se envía al login
-  useEffect(()=>{
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if(user){
-      dispatch({type:"USER", payload:user});
-    }else{
+    if (user) {
+      dispatch({ type: "USER", payload: user });
+    } else {
       history.push('/signin');
     }
   }, []);
@@ -62,13 +62,15 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    //Todos los nodos hijos de app tiene acceso al contexton con state
-    //Acceen a los valores(algo similar a un getter) y con dispatch
+    //Todos los nodos hijos de app tiene acceso al contexto con state
+    //Acceden a los valores(algo similar a un getter) y con dispatch
     //pueden cambiar esos valore(algo similar a un setter)
-    <UserContext.Provider value={{state, dispatch}}>
+    <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <NavBar />
-        <Routing />
+        <div className="container">
+          <Routing />
+        </div>
       </BrowserRouter>
     </UserContext.Provider>
 

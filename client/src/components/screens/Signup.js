@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
+import { Helmet } from 'react-helmet';
 
 const Signup = () => {
 
@@ -13,8 +14,11 @@ const Signup = () => {
     const [profileImage, setProfileImage] = useState("");
     const [url, setUrl] = useState(undefined);
 
-    useEffect(()=>{
-        if(url){
+    //Título de la página
+    const TITLE = 'Iniciar Sesión'
+
+    useEffect(() => {
+        if (url) {
             uploadFields();
         }
     }, [url]);
@@ -25,7 +29,7 @@ const Signup = () => {
             name,
             email,
             password,
-            pic:url
+            pic: url
         };
         axios.post('http://localhost:5000/signup', newUser).then((response) => {
             materialize.toast({ html: response.data.message, classes: "##69f0ae green accent-2" });
@@ -41,7 +45,7 @@ const Signup = () => {
         e.preventDefault();
         if (profileImage) {
             uploadPic(e);
-        }else{
+        } else {
             uploadFields();
         }
 
@@ -73,6 +77,9 @@ const Signup = () => {
 
     return (
         <div className="myCard">
+            <Helmet>
+                <title>{TITLE}</title>
+            </Helmet>
             <div className="card auth-card input-field">
                 <h2>Instagram</h2>
                 <form onSubmit={(e) => postData(e)}>

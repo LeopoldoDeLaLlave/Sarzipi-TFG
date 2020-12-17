@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
+import { Helmet } from 'react-helmet'
 
 const CreatePost = () => {
 
@@ -14,6 +15,9 @@ const CreatePost = () => {
     const [body, setBody] = useState("");
     const [image, setImage] = useState("");
     const [photo, setPhoto] = useState("");
+
+    //Título de la página
+    const TITLE = 'Subir Receta'
     //Nos indica si la acción de pulsar like está siendo ejecutada en ese momento
     const [pulsado, setPulsado] = useState(false);
 
@@ -23,7 +27,7 @@ const CreatePost = () => {
 
 
         if (photo) {
-            
+
             const newPost = {
                 title,
                 body,
@@ -69,7 +73,7 @@ const CreatePost = () => {
         }
     }
 
-    
+
     return (
         <div className="card input-file" style={{
             margin: "30px auto",
@@ -77,6 +81,9 @@ const CreatePost = () => {
             padding: "20px",
             textAlign: "center"
         }}>
+            <Helmet>
+                <title>{TITLE}</title>
+            </Helmet>
 
             <form onSubmit={(e) => postDetails(e)}>
                 <input type="text"
