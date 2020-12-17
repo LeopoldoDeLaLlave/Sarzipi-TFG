@@ -45,3 +45,13 @@ a{
 .collection-item{
   width: 100%;
 }
+
+.navbar-collapse{
+  margin-right:10%;
+}
+
+.dropdown-toggle{
+  height: 80% ;
+  
+}
+

@@ -21,26 +21,33 @@ const NavBar = () => {
         //Si hay algún valor (user) en el state se muestran los links de perfil y crrar post
         if (state) {
             return [
-                <li key="1"><i data-target="modal1" className="large material-icons modal-trigger" style={{ color: "black" }}>search</i></li>,
-                <li key="2"><Link to="/profile">Profile</Link></li>,
-                <li key="3"><Link to="/create">Create Post</Link></li>,
-                <li key="4"><Link to="/myfollowingpost">My following posts</Link></li>,
-                <li key="5">
-                    <button className="btn waves-effect waves-light #d50000 red accent-4"
-                        onClick={() => {
-                            localStorage.clear();
-                            dispatch({ type: "CLEAR" });
-                            history.push("/signin");
-                        }}>
-                        Logout
-                    </button>
+
+                <li key="1" className="nav-item"><i data-target="modal1" className="large material-icons modal-trigger" style={{ color: "black" }}>search</i></li>,
+                <li key="2" className="nav-item"><Link to="/">Explora</Link></li>,
+                <li key="3" className="nav-item"><Link to="/create">Subir recetas</Link></li>,
+                <li key="4" className="nav-item dropdown">
+                    <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Perfil</Link>
+
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <Link className="dropdown-item" to="/profile">Perfil</Link>
+                        <a className="dropdown-item"
+                            onClick={() => {
+                                localStorage.clear();
+                                dispatch({ type: "CLEAR" });
+                                history.push("/signin");
+                            }}>
+                            Logout
+                    </a>
+                    </div>
                 </li>
             ];
             //Si no hay ningún valor (user) en el state se muestran los links de login y registro
         } else {
             return [
-                <li key="6"><Link to="/signin">Login</Link></li>,
-                <li key="7"><Link to="/signup">Signup</Link></li>
+                <li key="6" className="nav-item"><Link to="/signin">Login</Link></li>,
+                <li key="7" className="nav-item"><Link to="/signup">Signup</Link></li>
             ]
         }
     }
@@ -53,10 +60,17 @@ const NavBar = () => {
 
     }
     return (
-        <nav>
-            <div className="nav-wrapper white" >
-                <Link to={state ? "/" : "/signin"} className="brand-logo left">Sarzipi</Link>
-                <ul id="nav-mobile" className="right">
+
+        <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <div className="hola">
+                
+            </div>
+            <Link to={state ? "/myfollowingpost" : "/signin"} className="navbar-brand">Sarzipi</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse d-flex justify-content-end perro" id="navbarNavDropdown" >
+                <ul className="navbar-nav ">
 
                     {renderList()}
 
@@ -84,7 +98,7 @@ const NavBar = () => {
                 </div>
             </div>
         </nav>
-        
+
     );
 };
 
