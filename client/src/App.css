@@ -55,3 +55,22 @@ a{
   
 }
 
+i{
+  cursor: pointer;
+}
+
+#modal1{
+  width: 50%;
+}
+#miNabvar{
+  background-color: rgb(230, 230, 230);
+  z-index: 10;
+}
+
+.navbarGris{
+  background-color: rgb(230, 230, 230);
+}
+
+
+
+
