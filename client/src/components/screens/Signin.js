@@ -28,7 +28,7 @@ const Signin = () => {
             //Al hacer login ponemos en el context el usuario
             dispatch({ type: "USER", payload: response.data.user });
             materialize.toast({ html: "Signedin Succes", classes: "##69f0ae green accent-2" });
-            history.push('/');
+            history.push('/myfollowingpost');
         }, (error) => {
             materialize.toast({ html: error.response.data.error, classes: "#b71c1c red darken-4" });
 

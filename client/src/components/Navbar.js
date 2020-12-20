@@ -37,15 +37,15 @@ const NavBar = () => {
                                 history.push("/signin");
                             }}>
                             Logout
-                    </p>
+                        </p>
                     </NavDropdown.Item>
                 </NavDropdown>
             ];
             //Si no hay ningún valor (user) en el state se muestran los links de login y registro
         } else {
             return [
-                <li key="6" ><Link to="/signin">Login</Link></li>,
-                <li key="7" ><Link to="/signup">Signup</Link></li>
+                <Nav.Link ><Link to="/signin">Signin</Link></Nav.Link>,
+                <Nav.Link ><Link to="/signup">Signup</Link></Nav.Link>
             ]
         }
     }
@@ -58,28 +58,28 @@ const NavBar = () => {
 
     }
 
-    //Cambia la clase del navbar
+    //Cambia la clase del navbar para que al desplegarse el navegador cuando
+    //la pantalla es pequeña se vea geis
 
-    const cambiaClase = ()=>{
-        if(claseNavbar == ""){
+    const cambiaClase = () => {
+        if (claseNavbar == "") {
             setclaseNavbar("navbarGris")
-        }else{
+        } else {
             setclaseNavbar("")
         }
-        console.log(claseNavbar);
     }
     return (
 
 
 
         <Navbar collapseOnSelect expand="lg" id="miNabvar" fixed="top">
-            <Navbar.Brand ><Link to={state ? "/" : "/signin"} >Sarzipi</Link></Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={()=>cambiaClase()}/>
+            <Navbar.Brand ><Link to={state ? "/myfollowingpost" : "/signin"} >Sarzipi</Link></Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => cambiaClase()} />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className={`ml-auto  ${claseNavbar} `} id="opcionesMenu" >
                     {renderList()}
                 </Nav>
-                
+
             </Navbar.Collapse>
             <div id="modal1" className="modal" ref={searchModal} style={{ color: "black" }}>
                 <div className="modal-content">
