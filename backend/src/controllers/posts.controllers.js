@@ -35,14 +35,14 @@ postCtrl.getAllPost = async (req, res) => {
         const posts = await Post.find()
         .populate("postedBy", "_id name")
         .populate("comments.postedBy","_id name").
-        sort('-createdAt');
+        sort('-createdAt'); 
         res.json({ posts });
     } catch (error) {
         console.log("error");
     }
 
 };
-
+ 
 
 postCtrl.getSubPost = async (req, res) => {
 

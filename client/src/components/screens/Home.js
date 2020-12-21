@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Card, Form, Button } from 'react-bootstrap'
 import { Helmet } from 'react-helmet';
 
 const Home = () => {
@@ -137,24 +138,27 @@ const Home = () => {
             {
                 data.map(item => {
                     return (
-                        <div className="card home-card" key={item._id}>
-                            <h5><Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link> {item.postedBy._id == state._id
-                                && <i className="material-icons" style={{
-                                    float: "right"
-                                }}
-                                    onClick={() => deletePost(item._id)}
-                                >delete</i>
-                            }</h5>
-                            <div className="card-image">
-                                <img src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
-
-                            </div>
-                            <div className="card-content">
+                        <Card style={{ width: '50%' }} key={item._id} className="mx-auto">
+                            <h5>
+                                <Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link> {item.postedBy._id == state._id
+                                    && <i className="material-icons" style={{
+                                        float: "right"
+                                    }}
+                                        onClick={() => deletePost(item._id)}
+                                    >delete</i>
+                                }
+                            </h5>
+                            <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
+                            <Card.Body>
                                 <i className="material-icons"
                                     style={{ color: "red", cursor: "pointer" }}
                                     onClick={() => likePost(item._id)}>favorite</i>
                                 <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
+
+                                <Card.Title>{item.title}</Card.Title>
+                                <Card.Text>
+                                    {item.body}
+                                </Card.Text>
                                 <p>{item.body}</p>
                                 {
                                     item.comments.map(record => {
@@ -165,7 +169,7 @@ const Home = () => {
 
                                     )
                                 }
-                                <form onSubmit={(e) => {
+                                <Form onSubmit={(e) => {
                                     e.preventDefault();
 
                                     //Para comentar hay que escribir algo
@@ -176,14 +180,24 @@ const Home = () => {
                                     }
 
                                 }}>
-                                    <input type="text" placeholder="Add a comment" />
-                                    <button className="btn waves-effect waves-light #64b5f6 blue darken-1">
-                                        Comment
-                                    </button>
-                                </form>
+                                    <Form.Group>
 
-                            </div>
-                        </div>
+                                        <Form.Control type="text"
+                                            placeholder="Pon un comentario"
+                                            required />
+                                        <br />
+
+
+                                    </Form.Group>
+                                    <Button variant="primary"
+                                        type="submit"
+                                        id="btnPost">
+                                        Comentar
+                                    </Button>
+
+                                </Form>
+                            </Card.Body>
+                        </Card>
                     )
                 })
             }

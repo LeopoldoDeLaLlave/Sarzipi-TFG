@@ -115,7 +115,7 @@ const CreatePost = () => {
                 <Button variant="primary"
                     type="submit"
                     id="btnPost">
-                    Submit
+                    Subir
                 </Button>               
             </Form>
         </div>
