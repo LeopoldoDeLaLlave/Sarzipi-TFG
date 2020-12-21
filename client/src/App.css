@@ -71,6 +71,10 @@ i{
   background-color: rgb(230, 230, 230);
 }
 
+#formularioSubirPost label, #formularioSubirPost button{
+   float: left;
+}
+
 
 
 

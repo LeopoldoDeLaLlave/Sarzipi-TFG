@@ -86,7 +86,7 @@ const CreatePost = () => {
                 <title>{TITLE}</title>
             </Helmet>
 
-            <Form onSubmit={(e) => postDetails(e)}>
+            <Form onSubmit={(e) => postDetails(e)} id="formularioSubirPost">
                 <Form.Group>
 
                     <Form.Control type="text"
