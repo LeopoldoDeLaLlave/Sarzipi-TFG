@@ -59,7 +59,7 @@ const Profile = () => {
     }
 
     return (
-        <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+        <div style={{ maxWidth: "80%", margin: "0px auto" }}>
 
 
             <div style={{
@@ -103,13 +103,16 @@ const Profile = () => {
                 {
                     myPics.map(item => {
                         return (
+
                             <img className="item" src={item.photo} alt={item.title + item.body} />
                         )
                     })
                 }
 
             </div>
+            <br /><br /><br />
         </div>
+
     );
 };
 

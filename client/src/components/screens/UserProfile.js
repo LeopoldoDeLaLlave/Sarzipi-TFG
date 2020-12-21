@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../App';
+import {Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -90,7 +91,7 @@ const UserProfile = () => {
     return (
         <>
             {userProfile ?
-                <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+                <div style={{ maxWidth: "80%", margin: "0px auto" }}>
                     <div style={{
                         display: "flex",
                         justifyContent: "space-around",
@@ -117,17 +118,18 @@ const UserProfile = () => {
                                 <h6>{userProfile.user.following.length} following</h6>
                             </div>
                             {showfollow ?
-                                <button style={{ margin: "10px" }}
-                                    className="btn waves-effect waves-light #64b5f6 blue darken-1"
+
+                                <Button style={{ margin: "10px" }}
+                                    variant="primary"
                                     onClick={() => followUser()}>
-                                    Follow
-                                    </button>
+                                    Seguir
+                                    </Button>
                                 :
-                                <button style={{ margin: "10px" }}
-                                    className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                                <Button style={{ margin: "10px" }}
+                                    variant="primary"
                                     onClick={() => unfollowUser()}>
                                     Unfollow
-                                    </button>
+                                    </Button>
                             }
                         </div>
                     </div>
@@ -145,6 +147,7 @@ const UserProfile = () => {
                 </div>
                 : <h2>loading...</h2>
             }
+            <br/><br/><br/>
         </>
     );
 };
