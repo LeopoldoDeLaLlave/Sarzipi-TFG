@@ -3,13 +3,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../../App';
 import axios from 'axios';
 import materialize from 'materialize-css';
-import { Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet'
 
 const Signin = () => {
 
     //Título de la página
-    const TITLE = 'Registro'
+    const TITLE = 'Iniciar sesión'
 
     const { state, dispatch } = useContext(UserContext);
 
@@ -40,28 +40,39 @@ const Signin = () => {
             <Helmet>
                 <title>{TITLE}</title>
             </Helmet>
-            <div className="card auth-card input-field">
-                <h2>Instagram</h2>
-                <form onSubmit={(e) => postData(e)}>
-                    <input type="email"
-                        placeholder="email"
+
+            <Form onSubmit={(e) => postData(e)} className="mx-auto" id="formularioInicioSesion">
+                <h1 >Sarzipi</h1>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email"
+                        placeholder="Introduce el email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required />
-                    <input type="password"
-                        placeholder="password"
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control type="password"
+                        placeholder="Introduce la ontraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required />
-                    <button className="btn waves-effect waves-light #64b5f6 blue darken-1">
-                        Login
-                    </button>
-                </form>
+                </Form.Group>
 
-                <h5>
-                    <Link to="/signup">Don't have an account?</Link>
-                </h5>
-            </div>
+
+                <Button variant="primary" type="submit">
+                    Iniciar sesión
+                </Button>
+                <br /><br />
+                <Form.Label>
+                    <h3>
+                        <Link to="/signup">¿No tienes cuenta?</Link>
+                    </h3>
+                </Form.Label>
+            </Form>
         </div>
     );
 };

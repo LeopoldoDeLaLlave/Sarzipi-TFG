@@ -16,7 +16,7 @@ const Signup = () => {
     const [url, setUrl] = useState(undefined);
 
     //Título de la página
-    const TITLE = 'Iniciar Sesión'
+    const TITLE = 'Registro'
 
     useEffect(() => {
         if (url) {

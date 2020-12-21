@@ -44,7 +44,6 @@ userCtrl.signUpUser = async (req, res) => {
 
         try {
             await user.save(user.email);
-            console.log(user.email);
             transporter.sendMail({
                     to:user.email,
                     from:"sarzipi@gmail.com",
