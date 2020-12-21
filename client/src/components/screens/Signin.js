@@ -41,7 +41,7 @@ const Signin = () => {
                 <title>{TITLE}</title>
             </Helmet>
 
-            <Form onSubmit={(e) => postData(e)} className="mx-auto" id="formularioInicioSesion">
+            <Form onSubmit={(e) => postData(e)} className="mx-auto customForm" >
                 <h1 >Sarzipi</h1>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>

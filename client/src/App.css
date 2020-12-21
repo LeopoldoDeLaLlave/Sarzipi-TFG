@@ -77,11 +77,11 @@ i{
 }
 
 
-#formularioInicioSesion{
+.customForm{
   width: 40%;
   border-style: ridge;
   border-width: 2px;
-  padding: 3%;
+  padding: 5%;
 }
 
 

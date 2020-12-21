@@ -138,7 +138,7 @@ const Home = () => {
             {
                 data.map(item => {
                     return (
-                        <Card style={{ width: '50%' }} key={item._id} className="mx-auto">
+                        <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
                             <h5>
                                 <Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link> {item.postedBy._id == state._id
                                     && <i className="material-icons" style={{

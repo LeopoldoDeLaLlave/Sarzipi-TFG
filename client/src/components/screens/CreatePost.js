@@ -76,17 +76,12 @@ const CreatePost = () => {
 
 
     return (
-        <div className="card input-file" style={{
-            margin: "30px auto",
-            maxWidth: "500px",
-            padding: "20px",
-            textAlign: "center"
-        }}>
+        <div >
             <Helmet>
                 <title>{TITLE}</title>
             </Helmet>
 
-            <Form onSubmit={(e) => postDetails(e)} id="formularioSubirPost">
+            <Form onSubmit={(e) => postDetails(e)} className="mx-auto customForm" id="formularioSubirPost">
                 <Form.Group>
 
                     <Form.Control type="text"
