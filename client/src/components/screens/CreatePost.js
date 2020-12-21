@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
+import { Form, Button} from 'react-bootstrap'
 import { Helmet } from 'react-helmet'
 
 const CreatePost = () => {
@@ -85,31 +86,41 @@ const CreatePost = () => {
                 <title>{TITLE}</title>
             </Helmet>
 
-            <form onSubmit={(e) => postDetails(e)}>
-                <input type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required />
-                <input type="text"
-                    placeholder="Body"
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                    required />
-                <div className="file-field input-field">
-                    <div className="btn #64b5f6 blue darken-1">
-                        <span>Upload photo</span>
-                        <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
-                    </div>
-                    <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
-                    </div>
-                </div>
-                <button className="btn waves-effect waves-light #64b5f6 blue darken-1" id="btnPost">Submit post </button>
-            </form>
+            <Form onSubmit={(e) => postDetails(e)}>
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        placeholder="Título"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required />
+                    <br />
+                    
+
+                </Form.Group>
+                <Form.Group >
+                    <Form.Label>Cuerpo</Form.Label>
+                    <Form.Control as="textarea"
+                        rows={3}
+                        value={body}
+                        onChange={(e) => setBody(e.target.value)}
+                        required />
+                </Form.Group>
+                <Form.Group>
+                    <Form.File id="exampleFormControlFile1"
+                        label="Seleccionar foto"
+                        onChange={(e) => setImage(e.target.files[0])} required />
+                </Form.Group>
+
+                <Button variant="primary"
+                    type="submit"
+                    id="btnPost">
+                    Submit
+                </Button>               
+            </Form>
         </div>
 
     )
 }
 
-export default CreatePost
+export default CreatePost;

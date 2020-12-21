@@ -1,4 +1,3 @@
-
 import React, { useEffect, createContext, useReducer, useContext } from 'react'
 import NavBar from './components/Navbar';
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
