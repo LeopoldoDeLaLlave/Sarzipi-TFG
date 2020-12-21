@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
-import { Form, Button} from 'react-bootstrap'
-import { Helmet } from 'react-helmet'
+import { Form, Button} from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 
 const CreatePost = () => {
 

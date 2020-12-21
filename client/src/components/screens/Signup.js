@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
+import { Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 
 const Signup = () => {
@@ -76,47 +77,61 @@ const Signup = () => {
 
 
     return (
-        <div className="myCard">
+        <div >
             <Helmet>
                 <title>{TITLE}</title>
             </Helmet>
-            <div className="card auth-card input-field">
-                <h2>Instagram</h2>
-                <form onSubmit={(e) => postData(e)}>
-                    <input type="text"
-                        placeholder="name"
+
+            <h1>Sarzipi</h1>
+            <Form onSubmit={(e) => postData(e)}>
+                <Form.Group >
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control type="text"
+                        placeholder="Introduce el nombre"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required />
-                    <input type="email"
-                        placeholder="email"
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email"
+                        placeholder="Introduce el email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required />
-                    <input type="password"
-                        placeholder="password"
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control type="password"
+                        placeholder="Introduce la ontraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required />
-                    <div className="file-field input-field">
-                        <div className="btn #64b5f6 blue darken-1">
-                            <span>Upload pic</span>
-                            <input type="file" onChange={(e) => setProfileImage(e.target.files[0])} />
-                        </div>
-                        <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" />
-                        </div>
-                    </div>
-                    <button className="btn waves-effect waves-light #64b5f6 blue darken-1">
-                        SignUp
-                    </button>
-                </form>
+                </Form.Group>
 
-                <h5>
-                    <Link to="/signin">Already have an account?</Link>
-                </h5>
-            </div>
+
+
+                <Form.Group>
+                    <Form.File id="exampleFormControlFile1"
+                        label="Foto de perfil"
+                        onChange={(e) => setProfileImage(e.target.files[0])} />
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                    Crear cuenta
+                </Button> 
+                <br/><br/>
+                <Form.Label>
+                    <h3>
+                        <Link to="/signin">¿Ya tienes cuenta?</Link>
+                    </h3>
+                </Form.Label>
+            </Form>
+
         </div>
+
     );
 };
 
