@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Form, Button } from 'react-bootstrap'
+import { Card, Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 
 const Home = () => {
@@ -155,15 +155,13 @@ const Home = () => {
                                     onClick={() => likePost(item._id)}>favorite</i>
                                 <h6>{item.likes.length} likes</h6>
 
-                                <Card.Title>{item.title}</Card.Title>
-                                <Card.Text>
-                                    {item.body}
-                                </Card.Text>
-                                <p>{item.body}</p>
+                                <Card.Title><b>{item.title}</b></Card.Title>
+                                <Card.Text>{item.body}</Card.Text>
+                                <br/>
                                 {
                                     item.comments.map(record => {
                                         return (
-                                            <h6 key={record._id}><span style={{ fontWeight: "500" }}>{record.postedBy.name}</span>:{record.text}</h6>
+                                            <h6 key={record._id}><span style={{ fontWeight: "500" }}>{record.postedBy.name+" "}</span>:{" "+ record.text}</h6>
                                         )
                                     }
 
