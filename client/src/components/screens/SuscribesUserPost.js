@@ -150,8 +150,8 @@ const Home = () => {
                             </h5>
                             <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
                             <Card.Body>
-                                <i className="material-icons"
-                                    style={{ color: "red", cursor: "pointer" }}
+                                <i 
+                                    className={item.likes.find(i=>i==state._id)? "material-icons corazonRojo":"material-icons corazonBlanco"}
                                     onClick={() => likePost(item._id)}>favorite</i>
                                 <h6>{item.likes.length} likes</h6>
 
