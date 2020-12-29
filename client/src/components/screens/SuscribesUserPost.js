@@ -36,7 +36,6 @@ const Home = () => {
 
     const likePost = async (id) => {
         if (!pulsado) {//Solo se ejecuta si no se está ejecuntando la acción
-            console.log("hola");
             pulsado = true;
             const postInfo = { postId: id }
 

@@ -197,4 +197,28 @@ postCtrl.deletePost = async (req, res) => {
     }
 }
 
+//Borra un comentario
+postCtrl.deleteComment = async (req, res) => {
+
+    try {
+
+
+            
+            Post.findByIdAndUpdate(
+                req.params.id, { $pull: { "comments": { _id: req.params.commentId } } }, { safe: true, upsert: true },
+                (err, result) => {
+                    if (err) {
+                        console.log(err);
+                        return res.status(200).json({ error: "No se pudo borrar el comentario" })
+                    }
+                    res.json(result);
+                }
+                );
+        
+
+    } catch (error) {
+        
+    }
+}
+
 module.exports = postCtrl;

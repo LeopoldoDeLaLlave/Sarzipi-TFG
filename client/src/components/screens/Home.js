@@ -24,7 +24,6 @@ const Home = () => {
                     'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                 },
             })
-            console.log(result.data.posts);
             setData(result.data.posts);
 
         }
@@ -39,7 +38,6 @@ const Home = () => {
 
     const likePost = async (id) => {
         if (!pulsado) {//Solo se ejecuta si no se está ejecuntando la acción
-            console.log("hola");
             pulsado = true;
             const postInfo = { postId: id }
 
