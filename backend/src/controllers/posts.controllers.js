@@ -206,7 +206,7 @@ postCtrl.deleteComment = async (req, res) => {
         const result = await Post.findByIdAndUpdate(
             req.params.postid, { $pull: { "comments": { _id: req.params.commentid } } }, 
             { new: true,safe: true, upsert: true }
-        );
+        ).populate("comments.postedBy", "_id name");
         res.json(result);
 
 

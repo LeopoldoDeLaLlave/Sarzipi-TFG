@@ -124,20 +124,10 @@ const Home = () => {
                 'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
             },
         });
-    
 
-        //Al borrar un comentario actualizamos los post para que lo refleje
-        // var newData = data;
-        // const index = data.findIndex((el) => el._id == result.data._id);
-        // console.log(index);
-        // newData[index] = result.data;
-        // console.log(result.data);
-        // console.log(newData);
-        // setData(newData);
 
 
         //Al borrar un comentario actualizamos los post para que lo refleje
-        //De momento falla+
         const newData = data.map(item => {
 
             if (item._id == deleteComentResult.data._id) {
@@ -175,6 +165,7 @@ const Home = () => {
             </Helmet>
             {
                 data.map(item => {
+                    
                     return (
                         <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
                             <h5>
@@ -198,6 +189,7 @@ const Home = () => {
                                 <br />
                                 {
                                     item.comments.map(record => {
+                                        
                                         return (
                                             <h6 key={record._id}>
                                                 <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
