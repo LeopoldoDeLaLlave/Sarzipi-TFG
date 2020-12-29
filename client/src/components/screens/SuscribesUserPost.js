@@ -139,7 +139,7 @@ const Home = () => {
         );
 
         setData(newData);
-        
+
 
     }
 
@@ -165,7 +165,7 @@ const Home = () => {
             </Helmet>
             {
                 data.map(item => {
-                    
+
                     return (
                         <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
                             <h5>
@@ -189,7 +189,7 @@ const Home = () => {
                                 <br />
                                 {
                                     item.comments.map(record => {
-                                        
+
                                         return (
                                             <h6 key={record._id}>
                                                 <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
@@ -201,7 +201,7 @@ const Home = () => {
                                                     >delete</i>
                                                 }
                                             </h6>
-                                                
+
 
                                         )
                                     }

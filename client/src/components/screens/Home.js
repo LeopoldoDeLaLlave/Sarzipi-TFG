@@ -34,7 +34,7 @@ const Home = () => {
     }, [])
 
 
- 
+
 
     const likePost = async (id) => {
         if (!pulsado) {//Solo se ejecuta si no se está ejecuntando la acción
@@ -116,6 +116,34 @@ const Home = () => {
 
     }
 
+    //Se encarga de borrar un comentario
+    //Solo puede borrarlos el autor del comentario
+    const deleteComment = async (postid, commentid) => {
+
+        const deleteComentResult = await axios.delete(`http://localhost:5000/deletecomment/${postid}/${commentid}`, {
+            headers: {
+                //le quitamos las comillas al token
+                'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
+            },
+        });
+
+
+
+        //Al borrar un comentario actualizamos los post para que lo refleje
+        const newData = data.map(item => {
+
+            if (item._id == deleteComentResult.data._id) {
+                return deleteComentResult.data;
+            } else {
+                return item;
+            }
+        }
+        );
+
+        setData(newData);
+
+
+    }
 
     const deletePost = async (postid) => {
 
@@ -138,6 +166,7 @@ const Home = () => {
             </Helmet>
             {
                 data.map(item => {
+                    console.log(item)
                     return (
                         <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
                             <h5>
@@ -151,17 +180,26 @@ const Home = () => {
                             </h5>
                             <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
                             <Card.Body>
-                                <i className={item.likes.find(i=>i==state._id)? "material-icons corazonRojo":"material-icons corazonBlanco"}
+                                <i className={item.likes.find(i => i == state._id) ? "material-icons corazonRojo" : "material-icons corazonBlanco"}
                                     onClick={() => likePost(item._id)}>favorite</i>
                                 <h6>{item.likes.length} likes</h6>
 
                                 <Card.Title><b>{item.title}</b></Card.Title>
                                 <Card.Text>{item.body}</Card.Text>
-                                <br/>
+                                <br />
                                 {
                                     item.comments.map(record => {
                                         return (
-                                            <h6 key={record._id}><span style={{ fontWeight: "500" }}>{record.postedBy.name+" "}</span>:{" "+ record.text}</h6>
+                                            <h6 key={record._id}>
+                                                <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
+                                                {record.postedBy._id == state._id
+                                                    && <i className="material-icons" style={{
+                                                        float: "right"
+                                                    }}
+                                                        onClick={() => deleteComment(item._id, record._id)}
+                                                    >delete</i>
+                                                }
+                                            </h6>
                                         )
                                     }
 
