@@ -31,7 +31,7 @@ router.put('/checklikes', requireLogin, checkLikes);
 
 router.put('/comment', requireLogin, putComment);
 
-router.put('/editcomment', requireLogin, deleteComment);
+router.delete('/deletecomment/:postid/:commentid', requireLogin, deleteComment);
 
 router.delete('/deletepost/:postid', requireLogin, deletePost);
 

@@ -33,24 +33,24 @@ postCtrl.getAllPost = async (req, res) => {
 
     try {
         const posts = await Post.find()
-        .populate("postedBy", "_id name")
-        .populate("comments.postedBy","_id name").
-        sort('-createdAt'); 
+            .populate("postedBy", "_id name")
+            .populate("comments.postedBy", "_id name").
+            sort('-createdAt');
         res.json({ posts });
     } catch (error) {
         console.log("error");
     }
 
 };
- 
+
 
 postCtrl.getSubPost = async (req, res) => {
 
     try {
-        const posts = await Post.find({postedBy:{$in:req.user.following}})
-        .populate("postedBy", "_id name")
-        .populate("comments.postedBy","_id name").
-        sort('-createdAt');;
+        const posts = await Post.find({ postedBy: { $in: req.user.following } })
+            .populate("postedBy", "_id name")
+            .populate("comments.postedBy", "_id name").
+            sort('-createdAt');;
         res.json({ posts });
     } catch (error) {
         console.log("error");
@@ -80,7 +80,7 @@ postCtrl.putLike = (req, res) => {
         }, {
             new: true
         }).populate("postedBy", "_id name")
-        .populate("comments.postedBy", "_id name")
+            .populate("comments.postedBy", "_id name")
             .exec((err, result) => {
                 if (err) {
                     return res.status(422).json({ error: err })
@@ -105,7 +105,7 @@ postCtrl.putUnlike = (req, res) => {
         }, {
             new: true
         }).populate("postedBy", "_id name")
-        .populate("comments.postedBy", "_id name")
+            .populate("comments.postedBy", "_id name")
             .exec((err, result) => {
                 if (err) {
                     return res.status(422).json({ error: err })
@@ -158,7 +158,7 @@ postCtrl.putComment = (req, res) => {
         }, {
             new: true
         }).populate("comments.postedBy", "_id name")
-        .populate("postedBy", "_id name")
+            .populate("postedBy", "_id name")
             .exec((err, result) => {
                 if (err) {
                     return res.status(422).json({ error: err })
@@ -178,19 +178,19 @@ postCtrl.putComment = (req, res) => {
 postCtrl.deletePost = async (req, res) => {
 
     try {
-        Post.findOne({_id:req.params.postid}).
-        populate("postedBy","_id")
-        .exec(async(err, post)=>{
-            if(err || !post){
-                return res.status(422).json({ error: err })
-            }
+        Post.findOne({ _id: req.params.postid }).
+            populate("postedBy", "_id")
+            .exec(async (err, post) => {
+                if (err || !post) {
+                    return res.status(422).json({ error: err })
+                }
 
-            if(post.postedBy._id.toString() === req.user._id.toString()){
-                const result = await post.remove();
-                res.json(result)
-            }
-        });
-        
+                if (post.postedBy._id.toString() === req.user._id.toString()) {
+                    const result = await post.remove();
+                    res.json(result)
+                }
+            });
+
 
     } catch (error) {
         console.log(error);
@@ -203,21 +203,16 @@ postCtrl.deleteComment = async (req, res) => {
     try {
 
 
-            
-            Post.findByIdAndUpdate(
-                req.params.id, { $pull: { "comments": { _id: req.params.commentId } } }, { safe: true, upsert: true },
-                (err, result) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(200).json({ error: "No se pudo borrar el comentario" })
-                    }
-                    res.json(result);
-                }
-                );
-        
+        const result = await Post.findByIdAndUpdate(
+            req.params.postid, { $pull: { "comments": { _id: req.params.commentid } } }, 
+            { new: true,safe: true, upsert: true }
+        );
+        res.json(result);
+
 
     } catch (error) {
-        
+        console.log(error);
+        return res.status(200).json({ error: "No se pudo borrar el comentario" })
     }
 }
 

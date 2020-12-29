@@ -114,8 +114,47 @@ const Home = () => {
 
     }
 
+    //Se encarga de borrar un comentario
+    //Solo puede borrarlos el autor del comentario
+    const deleteComment = async (postid, commentid) => {
+
+        const deleteComentResult = await axios.delete(`http://localhost:5000/deletecomment/${postid}/${commentid}`, {
+            headers: {
+                //le quitamos las comillas al token
+                'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
+            },
+        });
+    
+
+        //Al borrar un comentario actualizamos los post para que lo refleje
+        // var newData = data;
+        // const index = data.findIndex((el) => el._id == result.data._id);
+        // console.log(index);
+        // newData[index] = result.data;
+        // console.log(result.data);
+        // console.log(newData);
+        // setData(newData);
+
+
+        //Al borrar un comentario actualizamos los post para que lo refleje
+        //De momento falla+
+        const newData = data.map(item => {
+
+            if (item._id == deleteComentResult.data._id) {
+                return deleteComentResult.data;
+            } else {
+                return item;
+            }
+        }
+        );
+
+        setData(newData);
+        
+
+    }
 
     const deletePost = async (postid) => {
+
 
         const result = await axios.delete(`http://localhost:5000/deletepost/${postid}`, {
             headers: {
@@ -149,8 +188,8 @@ const Home = () => {
                             </h5>
                             <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
                             <Card.Body>
-                                <i 
-                                    className={item.likes.find(i=>i==state._id)? "material-icons corazonRojo":"material-icons corazonBlanco"}
+                                <i
+                                    className={item.likes.find(i => i == state._id) ? "material-icons corazonRojo" : "material-icons corazonBlanco"}
                                     onClick={() => likePost(item._id)}>favorite</i>
                                 <h6>{item.likes.length} likes</h6>
 
@@ -160,7 +199,18 @@ const Home = () => {
                                 {
                                     item.comments.map(record => {
                                         return (
-                                            <h6 key={record._id}><span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}</h6>
+                                            <h6 key={record._id}>
+                                                <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
+                                                {record.postedBy._id == state._id
+                                                    && <i className="material-icons" style={{
+                                                        float: "right"
+                                                    }}
+                                                        onClick={() => deleteComment(item._id, record._id)}
+                                                    >delete</i>
+                                                }
+                                            </h6>
+                                                
+
                                         )
                                     }
 
