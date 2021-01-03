@@ -18,6 +18,7 @@ import Signup from './components/screens/Signup';
 import CreatePost from './components/screens/CreatePost';
 import UserProfile from './components/screens/UserProfile';
 import SuscribesUserPost from './components/screens/SuscribesUserPost';
+import OneRecipe from './components/screens/OneRecipe';
 import { reducer, initialState } from './reducers/userReducer';
 
 
@@ -58,6 +59,9 @@ const Routing = () => {
       </Route>
       <Route path="/profile/:userid">
         <UserProfile />
+      </Route>
+      <Route path="/onerecipe/:postid">
+        <OneRecipe />
       </Route>
       <Route path="/myfollowingpost">
         <SuscribesUserPost />

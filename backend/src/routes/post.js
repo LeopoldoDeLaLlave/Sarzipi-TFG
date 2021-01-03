@@ -21,7 +21,7 @@ router.get('/allpost', requireLogin, getAllPost);
 
 router.get('/getsubpost', requireLogin, getSubPost);
 
-router.get('receta/:postid', requireLogin, getOneRecipe);
+router.get('/receta/:postid', requireLogin, getOneRecipe);
 
 router.get('/mypost', requireLogin, getUsersPosts);
 
