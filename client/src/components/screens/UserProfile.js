@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../App';
-import {Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { Card} from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet';
 
 const UserProfile = () => {
@@ -134,20 +136,26 @@ const UserProfile = () => {
                         </div>
                     </div>
 
-                    <div className="gallery">
-                        {
-                            userProfile.posts.map(item => {
-                                return (
-                                    <img className="item" src={item.photo} alt={item.title + item.body} />
-                                )
-                            })
-                        }
+                    {
+                        userProfile.posts.map(item => {
+                            return (
+                                <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
+                                    <h5><Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link></h5>
+                                    <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
+                                    <Card.Body>
 
-                    </div>
+                                        <Card.Title> <Link to={`/onerecipe/${item._id}`}><b>{item.title}</b></Link></Card.Title>
+                                        <br />
+
+                                    </Card.Body>
+                                </Card>
+                            )
+                        })
+                    }
                 </div>
                 : <h2>loading...</h2>
             }
-            <br/><br/><br/>
+            <br /><br /><br />
         </>
     );
 };

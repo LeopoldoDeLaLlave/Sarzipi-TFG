@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { Card} from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 import { UserContext } from '../../App';
 
 const Profile = () => {
@@ -99,17 +101,22 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className="gallery">
-                {
-                    myPics.map(item => {
-                        return (
+            {
+                myPics.map(item => {
+                    return (
+                        <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
+                            <h5><Link to={item.postedBy._id != state._id ? `/profile/${item.postedBy._id}` : '/profile'}>{item.postedBy.name}</Link></h5>
+                            <Card.Img variant="top" src={item.photo} alt={"postedBy:" + item.postedBy.name + item.title} />
+                            <Card.Body>
 
-                            <img className="item" src={item.photo} alt={item.title + item.body} />
-                        )
-                    })
-                }
+                                <Card.Title> <Link to={`/onerecipe/${item._id}`}><b>{item.title}</b></Link></Card.Title>
+                                <br />
 
-            </div>
+                            </Card.Body>
+                        </Card>
+                    )
+                })
+            }
             <br /><br /><br />
         </div>
 
