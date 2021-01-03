@@ -217,4 +217,18 @@ postCtrl.deleteComment = async (req, res) => {
     }
 }
 
+
+//Consigue una receta concreta
+postCtrl.getOneRecipe = async (req, res) => {
+
+    try {
+        const receta = await Post.findById(req.params.id).populate("postedBy", "_id name");;
+        res.json({receta});
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({ error: "No se pudo obtener la receta" })
+    }
+}
+
+
 module.exports = postCtrl;

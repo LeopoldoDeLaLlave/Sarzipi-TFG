@@ -166,7 +166,6 @@ const Home = () => {
             </Helmet>
             {
                 data.map(item => {
-                    console.log(item)
                     return (
                         <Card style={{ width: '80%' }} key={item._id} className="mx-auto">
                             <h5>
