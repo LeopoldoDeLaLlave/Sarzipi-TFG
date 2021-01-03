@@ -223,11 +223,9 @@ postCtrl.getOneRecipe = async (req, res) => {
 
     
     try {
-        console.log("hola");
         const receta = await Post.findById(req.params.postid)
         .populate("comments.postedBy", "_id name")
         .populate("postedBy", "_id name");
-        console.log(receta);   
         res.json({receta});
         
     } catch (error) {

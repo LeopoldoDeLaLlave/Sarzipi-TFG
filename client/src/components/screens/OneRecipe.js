@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Card, Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ const OneRecipe = () => {
     const [data, setData] = useState(null);
     const { state, dispatch } = useContext(UserContext);
     const { postid } = useParams();
+    const history = useHistory();
 
     //Título de la página
     const TITLE = 'Sarzipi';
@@ -26,7 +27,6 @@ const OneRecipe = () => {
                     'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                 },
             })
-            console.log(result.data.receta);
             setData(result.data.receta);
 
         }
@@ -60,16 +60,8 @@ const OneRecipe = () => {
                         'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                     },
                 });
-                const newData = data.map(item => {
-
-                    if (item._id == result.data._id) {
-                        return result.data;
-                    } else {
-                        return item;
-                    }
-                }
-                )
-                setData(newData);
+                
+                setData(result.data);
             } else {
                 const unlikeResult = await axios.put('http://localhost:5000/unlike', postInfo, {
                     headers: {
@@ -77,16 +69,8 @@ const OneRecipe = () => {
                         'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                     },
                 });
-                const newData = data.map(item => {
-
-                    if (item._id == unlikeResult.data._id) {
-                        return unlikeResult.data;
-                    } else {
-                        return item;
-                    }
-                }
-                )
-                setData(newData);
+                
+                setData(unlikeResult.data);
 
             }
 
@@ -104,18 +88,11 @@ const OneRecipe = () => {
             },
         });
 
+        console.log(commentResult.data);
 
-        const newData = data.map(item => {
 
-            if (item._id == commentResult.data._id) {
-                return commentResult.data;
-            } else {
-                return item;
-            }
-        }
-        )
 
-        setData(newData);
+        setData(commentResult.data);
 
     }
 
@@ -132,18 +109,9 @@ const OneRecipe = () => {
 
 
 
-        //Al borrar un comentario actualizamos los post para que lo refleje
-        const newData = data.map(item => {
 
-            if (item._id == deleteComentResult.data._id) {
-                return deleteComentResult.data;
-            } else {
-                return item;
-            }
-        }
-        );
 
-        setData(newData);
+        setData(deleteComentResult.data);
 
 
     }
@@ -156,10 +124,7 @@ const OneRecipe = () => {
                 'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
             },
         });
-        const newData = data.filter(item => {
-            return item._id != result.data._id
-        })
-        setData(newData);
+        history.push('/myfollowingpost');
     }
 
     return (
