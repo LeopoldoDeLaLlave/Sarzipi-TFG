@@ -37,8 +37,9 @@ const OneRecipe = () => {
 
 
 
+    //Pone o quita un like a una publicación
     const likePost = async (id) => {
-        if (!pulsado) {//Solo se ejecuta si no se está ejecuntando la acción
+        if (!pulsado) {//Solo se ejecuta si no se está ejecuntando la acción para no poder dar más de un like
             pulsado = true;
             const postInfo = { postId: id }
 
@@ -72,12 +73,13 @@ const OneRecipe = () => {
 
             }
 
-            pulsado = false;//Al terminar la cción se puede volver a pulsar
+            pulsado = false;//Al terminar la acción se puede volver a pulsar
         }
 
 
     }
 
+    //Pone un comentario en la publicación
     const makeComment = async (text, postID) => {
         const commentResult = await axios.put('http://localhost:5000/comment', { postID, text }, {
             headers: {
@@ -114,6 +116,7 @@ const OneRecipe = () => {
 
     }
 
+    //Elimina el post
     const deletePost = async (postid) => {
 
         const result = await axios.delete(`http://localhost:5000/deletepost/${postid}`, {
@@ -156,7 +159,7 @@ const OneRecipe = () => {
                                     return (
                                         <h6 key={record._id}>
                                             <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
-                                            {record.postedBy._id == state._id
+                                            {(record.postedBy._id == state._id || data.postedBy._id == state._id)
                                                 && <i className="material-icons" style={{
                                                     float: "right"
                                                 }}
