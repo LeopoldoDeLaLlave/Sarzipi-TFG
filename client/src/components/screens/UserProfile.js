@@ -101,7 +101,7 @@ const UserProfile = () => {
                         borderBottom: "1px solid grey"
                     }}>
                         <Helmet>
-                            <title>{userProfile.user.name}</title>
+                            <title>{`Sarzipi: ${userProfile.user.name}`}</title>
                         </Helmet>
                         <div>
                             <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Card} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
 
@@ -62,7 +63,9 @@ const Profile = () => {
 
     return (
         <div style={{ maxWidth: "80%", margin: "0px auto" }}>
-
+            <Helmet>
+                <title>{state ? `Sarzipi: ${state.name}` : "Sarzipi"}</title>
+            </Helmet>
 
             <div style={{
                 margin: "18px 0px",

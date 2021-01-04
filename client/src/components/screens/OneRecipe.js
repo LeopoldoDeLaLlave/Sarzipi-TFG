@@ -15,8 +15,6 @@ const OneRecipe = () => {
     const { postid } = useParams();
     const history = useHistory();
 
-    //Título de la página
-    const TITLE = 'Sarzipi';
 
     useEffect(() => {
 
@@ -60,7 +58,7 @@ const OneRecipe = () => {
                         'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                     },
                 });
-                
+
                 setData(result.data);
             } else {
                 const unlikeResult = await axios.put('http://localhost:5000/unlike', postInfo, {
@@ -69,7 +67,7 @@ const OneRecipe = () => {
                         'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
                     },
                 });
-                
+
                 setData(unlikeResult.data);
 
             }
@@ -130,78 +128,78 @@ const OneRecipe = () => {
     return (
         <div className="home">
             <Helmet>
-                <title>{TITLE}</title>
+                <title>{data ? `Sarzipi: ${data.title}` : "Sarzipi"}</title>
             </Helmet>
             {
-                data?
-                <Card style={{ width: '80%' }} key={data._id} className="mx-auto">
-                    <h5>
-                        <Link to={data.postedBy._id != state._id ? `/profile/${data.postedBy._id}` : '/profile'}>{data.postedBy.name}</Link> {data.postedBy._id == state._id
-                            && <i className="material-icons" style={{
-                                float: "right"
-                            }}
-                                onClick={() => deletePost(data._id)}
-                            >delete</i>
-                        }
-                    </h5>
-                    <Card.Img variant="top" src={data.photo} alt={"postedBy:" + data.postedBy.name + data.title} />
-                    <Card.Body>
-                        <i className={data.likes.find(i => i == state._id) ? "material-icons corazonRojo" : "material-icons corazonBlanco"}
-                            onClick={() => likePost(data._id)}>favorite</i>
-                        <h6>{data.likes.length} likes</h6>
+                data ?
+                    <Card style={{ width: '80%' }} key={data._id} className="mx-auto">
+                        <h5>
+                            <Link to={data.postedBy._id != state._id ? `/profile/${data.postedBy._id}` : '/profile'}>{data.postedBy.name}</Link> {data.postedBy._id == state._id
+                                && <i className="material-icons" style={{
+                                    float: "right"
+                                }}
+                                    onClick={() => deletePost(data._id)}
+                                >delete</i>
+                            }
+                        </h5>
+                        <Card.Img variant="top" src={data.photo} alt={"postedBy:" + data.postedBy.name + data.title} />
+                        <Card.Body>
+                            <i className={data.likes.find(i => i == state._id) ? "material-icons corazonRojo" : "material-icons corazonBlanco"}
+                                onClick={() => likePost(data._id)}>favorite</i>
+                            <h6>{data.likes.length} likes</h6>
 
-                        <Card.Title><b>{data.title}</b></Card.Title>
-                        <Card.Text>{data.body}</Card.Text>
-                        <br />
-                        {
-                            data.comments.map(record => {
-                                return (
-                                    <h6 key={record._id}>
-                                        <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
-                                        {record.postedBy._id == state._id
-                                            && <i className="material-icons" style={{
-                                                float: "right"
-                                            }}
-                                                onClick={() => deleteComment(data._id, record._id)}
-                                            >delete</i>
-                                        }
-                                    </h6>
+                            <Card.Title><b>{data.title}</b></Card.Title>
+                            <Card.Text>{data.body}</Card.Text>
+                            <br />
+                            {
+                                data.comments.map(record => {
+                                    return (
+                                        <h6 key={record._id}>
+                                            <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}
+                                            {record.postedBy._id == state._id
+                                                && <i className="material-icons" style={{
+                                                    float: "right"
+                                                }}
+                                                    onClick={() => deleteComment(data._id, record._id)}
+                                                >delete</i>
+                                            }
+                                        </h6>
+                                    )
+                                }
+
                                 )
                             }
+                            <Form onSubmit={(e) => {
+                                e.preventDefault();
 
-                            )
-                        }
-                        <Form onSubmit={(e) => {
-                            e.preventDefault();
+                                //Para comentar hay que escribir algo
+                                if (e.target[0].value.length > 0) {
+                                    makeComment(e.target[0].value, data._id);
+                                    //Vacíamos la caja de comentarios
+                                    e.target[0].value = "";
+                                }
 
-                            //Para comentar hay que escribir algo
-                            if (e.target[0].value.length > 0) {
-                                makeComment(e.target[0].value, data._id);
-                                //Vacíamos la caja de comentarios
-                                e.target[0].value = "";
-                            }
+                            }}>
+                                <Form.Group>
 
-                        }}>
-                            <Form.Group>
-
-                                <Form.Control type="text"
-                                    placeholder="Pon un comentario"
-                                    required />
-                                <br />
+                                    <Form.Control type="text"
+                                        placeholder="Pon un comentario"
+                                        required />
+                                    <br />
 
 
-                            </Form.Group>
-                            <Button variant="primary"
-                                type="submit"
-                                id="btnPost">
-                                Comentar
+                                </Form.Group>
+                                <Button variant="primary"
+                                    type="submit"
+                                    id="btnPost">
+                                    Comentar
                                     </Button>
 
-                        </Form>
-                    </Card.Body>
-                </Card>
-                :
-                <h1>loading...</h1>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                    :
+                    <h1>loading...</h1>
 
             }
 
