@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import materialize from 'materialize-css';
-import { Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 
 const CreatePost = () => {
@@ -17,22 +17,57 @@ const CreatePost = () => {
     const [image, setImage] = useState("");
     const [photo, setPhoto] = useState("");
 
+    const [etiqueta0, setEtiqueta0] = useState("");
+    const [etiqueta1, setEtiqueta1] = useState("");
+    const [etiqueta2, setEtiqueta2] = useState("");
+    const [etiqueta3, setEtiqueta3] = useState("");
+    const [etiqueta4, setEtiqueta4] = useState("");
+
+
     //Título de la página
     const TITLE = 'Subir Receta'
-    //Nos indica si la acción de pulsar like está siendo ejecutada en ese momento
+    //Nos indica si la acción de subir posts está siendo ejecutada en ese momento
     const [pulsado, setPulsado] = useState(false);
 
 
-    //Cuando se produce un cambio en foto se ejecuta este código
+    //Una vez subida la foto a cloudinary y conseguida su url, se ejecuta este
+    //código para guardar el post en la base de datos
     useEffect(() => {
 
 
         if (photo) {
 
+            //Aquí guardaremos las etiquetas del post
+            var etiquetas = [];
+
+            //vamos a llenar el array con las etiquetas
+            if(etiqueta0.replace(/\s/g, '').length > 0){
+                etiquetas.push(etiqueta0.replace(/\s/g, ''));
+            }
+
+            if(etiqueta1.replace(/\s/g, '').length > 0){
+                etiquetas.push(etiqueta1.replace(/\s/g, ''));
+            }
+
+            if(etiqueta2.replace(/\s/g, '').length > 0){
+                etiquetas.push(etiqueta2.replace(/\s/g, ''));
+            }
+
+            if(etiqueta3.replace(/\s/g, '').length > 0){
+                etiquetas.push(etiqueta3.replace(/\s/g, ''));
+            }
+
+            if(etiqueta4.replace(/\s/g, '').length > 0){
+                etiquetas.push(etiqueta4.replace(/\s/g, ''));
+            }
+            
+
+
             const newPost = {
                 title,
                 body,
-                photo
+                photo,
+                etiquetas
             };
 
             axios.post('http://localhost:5000/createpost', newPost, {
@@ -44,6 +79,7 @@ const CreatePost = () => {
                 materialize.toast({ html: "Created post", classes: "##69f0ae green accent-2" });
                 history.push('/');
             }, (error) => {
+                console.log("hola");
                 console.log(error.response);
                 materialize.toast({ html: error.response.data.error, classes: "#b71c1c red darken-4" });
 
@@ -74,6 +110,29 @@ const CreatePost = () => {
         }
     }
 
+    //Se encarga de cambiar el valor de cada etiqueta
+    //para ello recibe el valor que va a tomar la etiqueta
+    //y el número de etiqueta al que le corresponde el valor
+    const ponerEtiquetas = (valor, nEtiqueta) => {
+        switch (nEtiqueta) {
+            case 0:
+                setEtiqueta0(valor);
+                break;
+            case 1:
+                setEtiqueta1(valor);
+                break;
+            case 2:
+                setEtiqueta2(valor);
+                break;
+            case 3:
+                setEtiqueta3(valor);
+                break;
+            case 4:
+                setEtiqueta4(valor);
+                break;
+        }
+
+    }
 
     return (
         <div >
@@ -90,7 +149,7 @@ const CreatePost = () => {
                         onChange={(e) => setTitle(e.target.value)}
                         required />
                     <br />
-                    
+
 
                 </Form.Group>
                 <Form.Group >
@@ -101,6 +160,53 @@ const CreatePost = () => {
                         onChange={(e) => setBody(e.target.value)}
                         required />
                 </Form.Group>
+                <h3>Etiquetas</h3>
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        value={etiqueta0}
+                        onChange={(e) => ponerEtiquetas(e.target.value, 0)}
+                    />
+
+                </Form.Group>
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        value={etiqueta1}
+                        onChange={(e) => ponerEtiquetas(e.target.value, 1)}
+                    />
+
+                </Form.Group>
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        value={etiqueta2}
+                        onChange={(e) => ponerEtiquetas(e.target.value, 2)}
+                    />
+
+                </Form.Group>
+
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        value={etiqueta3}
+                        onChange={(e) => ponerEtiquetas(e.target.value, 3)}
+                    />
+
+                </Form.Group>
+
+                <Form.Group>
+
+                    <Form.Control type="text"
+                        value={etiqueta4}
+                        onChange={(e) => ponerEtiquetas(e.target.value, 4)}
+                    />
+
+                </Form.Group>
+
+
+
+                <br />
                 <Form.Group>
                     <Form.File id="exampleFormControlFile1"
                         label="Seleccionar foto"
@@ -111,7 +217,7 @@ const CreatePost = () => {
                     type="submit"
                     id="btnPost">
                     Subir
-                </Button>               
+                </Button>
             </Form>
         </div>
 

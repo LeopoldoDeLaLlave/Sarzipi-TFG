@@ -4,7 +4,7 @@ const postCtrl = {};
 const Post = require('../models/post');
 //Creamos un post
 postCtrl.createPost = async (req, res) => {
-    const { title, body, photo } = req.body;
+    const { title, body, photo, etiquetas } = req.body;
 
     if (!title || !body || !photo) {
         res.status(422).json({ error: "Please add all the fields" });
@@ -15,6 +15,7 @@ postCtrl.createPost = async (req, res) => {
         title,
         body,
         photo,
+        etiquetas,
         postedBy: req.user
     });
 
