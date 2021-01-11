@@ -91,6 +91,16 @@ i{
 .corazonRojo{
   color: rgb(255, 0, 0);
 }
+.Picante{
+  color: rgb(255, 0, 0);
+}
+
+.etiqueta{
+  float:left;
+  margin-right: 10px;
+  background-color: rgb(213, 223, 219);
+  border-radius: 15px;
+}
 
 
 

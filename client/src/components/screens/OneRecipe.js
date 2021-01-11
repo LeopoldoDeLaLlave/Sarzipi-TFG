@@ -152,10 +152,24 @@ const OneRecipe = () => {
                             <h6>{data.likes.length} likes</h6>
 
                             <Card.Title><b>{data.title}</b></Card.Title>
+                            {
+                                data.etiquetas.map(etiqueta => {
+                                    return (
+                                        <div >
+                                            <div className="etiqueta">{etiqueta.text}</div>
+                                        </div>
+                                        
+
+                                    )
+                                    console.log(etiqueta);
+                                })
+                            }
+                            <br /><br />
                             <Card.Text>{data.body}</Card.Text>
                             <br />
                             {
                                 data.comments.map(record => {
+                                    console.log(record);
                                     return (
                                         <h6 key={record._id}>
                                             <span style={{ fontWeight: "500" }}>{record.postedBy.name + " "}</span>:{" " + record.text}

@@ -42,23 +42,23 @@ const CreatePost = () => {
 
             //vamos a llenar el array con las etiquetas
             if(etiqueta0.replace(/\s/g, '').length > 0){
-                etiquetas.push(etiqueta0.replace(/\s/g, ''));
+                etiquetas.push({'text' : etiqueta0.replace(/\s/g, '')});
             }
 
             if(etiqueta1.replace(/\s/g, '').length > 0){
-                etiquetas.push(etiqueta1.replace(/\s/g, ''));
+                etiquetas.push({'text' : etiqueta1.replace(/\s/g, '')});
             }
 
             if(etiqueta2.replace(/\s/g, '').length > 0){
-                etiquetas.push(etiqueta2.replace(/\s/g, ''));
+                etiquetas.push({'text' : etiqueta2.replace(/\s/g, '')});
             }
 
             if(etiqueta3.replace(/\s/g, '').length > 0){
-                etiquetas.push(etiqueta3.replace(/\s/g, ''));
+                etiquetas.push({'text' : etiqueta3.replace(/\s/g, '')});
             }
 
             if(etiqueta4.replace(/\s/g, '').length > 0){
-                etiquetas.push(etiqueta4.replace(/\s/g, ''));
+                etiquetas.push({'text' : etiqueta4.replace(/\s/g, '')});
             }
             
 

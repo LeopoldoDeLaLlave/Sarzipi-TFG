@@ -19,7 +19,9 @@ const postSchema = new Schema({
         text:String,
         postedBy:{type:ObjectID,ref:"User"}
     }],
-    etiquetas:[[String]],
+    etiquetas:[{
+        text:String
+    }],
     postedBy:{
         type:ObjectID,
         ref:"User"
