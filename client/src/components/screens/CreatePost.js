@@ -210,6 +210,7 @@ const CreatePost = () => {
                 <Form.Group>
                     <Form.File id="exampleFormControlFile1"
                         label="Seleccionar foto"
+                        accept=".jpg,.png"
                         onChange={(e) => setImage(e.target.files[0])} required />
                 </Form.Group>
 
