@@ -13,8 +13,7 @@ const HastagPosts = () => {
     const { state, dispatch } = useContext(UserContext);   
     const { etiqueta } = useParams();
 
-    //Título de la página
-    const TITLE = 'Sarzipi'
+ 
 
     useEffect(() => {
 
@@ -39,8 +38,11 @@ const HastagPosts = () => {
     return (
         <div className="home">
             <Helmet>
-                <title>{TITLE}</title>
+                <title>Recetas: {etiqueta}</title>
             </Helmet>
+
+            <h1 className="titulo">{etiqueta}</h1>
+            <br/><br/>
             {
                 data.map(item => {
                     return (

@@ -116,19 +116,19 @@ const CreatePost = () => {
     const ponerEtiquetas = (valor, nEtiqueta) => {
         switch (nEtiqueta) {
             case 0:
-                setEtiqueta0(valor);
+                setEtiqueta0(valor.toLowerCase());
                 break;
             case 1:
-                setEtiqueta1(valor);
+                setEtiqueta1(valor.toLowerCase());
                 break;
             case 2:
-                setEtiqueta2(valor);
+                setEtiqueta2(valor.toLowerCase());
                 break;
             case 3:
-                setEtiqueta3(valor);
+                setEtiqueta3(valor.toLowerCase());
                 break;
             case 4:
-                setEtiqueta4(valor);
+                setEtiqueta4(valor.toLowerCase());
                 break;
         }
 
