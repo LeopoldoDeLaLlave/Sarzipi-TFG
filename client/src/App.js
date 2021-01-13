@@ -19,6 +19,7 @@ import CreatePost from './components/screens/CreatePost';
 import UserProfile from './components/screens/UserProfile';
 import SuscribesUserPost from './components/screens/SuscribesUserPost';
 import OneRecipe from './components/screens/OneRecipe';
+import HastagPosts from './components/screens/HastagPosts'
 import { reducer, initialState } from './reducers/userReducer';
 
 
@@ -62,6 +63,9 @@ const Routing = () => {
       </Route>
       <Route path="/onerecipe/:postid">
         <OneRecipe />
+      </Route>
+      <Route path="/recetas/:etiqueta">
+        <HastagPosts />
       </Route>
       <Route path="/myfollowingpost">
         <SuscribesUserPost />

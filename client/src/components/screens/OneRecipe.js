@@ -156,7 +156,7 @@ const OneRecipe = () => {
                                 data.etiquetas.map(etiqueta => {
                                     return (
                                         <div >
-                                            <div className="etiqueta">{etiqueta.text}</div>
+                                            <div className="etiqueta"><Link to={`/recetas/${etiqueta.text}`}>{etiqueta.text}</Link></div>
                                         </div>
                                         
 

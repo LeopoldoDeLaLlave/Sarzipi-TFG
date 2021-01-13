@@ -2,14 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import axios from 'axios';
 import { Card} from 'react-bootstrap';
-import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { useParams } from 'react-router-dom';
 
-const Home = () => {
+const HastagPosts = () => {
 
     //Nos indica si la acción de pulsar like está siendo ejecutada en ese momento
     const [data, setData] = useState([]);
-    const { state, dispatch } = useContext(UserContext);
+    const { state, dispatch } = useContext(UserContext);   
+    const { etiqueta } = useParams();
 
     //Título de la página
     const TITLE = 'Sarzipi'
@@ -17,7 +19,7 @@ const Home = () => {
     useEffect(() => {
 
         const fetchData = async () => {
-            const result = await axios.get('http://localhost:5000/getsubpost', {
+            const result = await axios.get(`http://localhost:5000/getrecetashastag/${etiqueta}`, {
                 headers: {
                     //le quitamos las comillas al token
                     'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
@@ -61,6 +63,6 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HastagPosts;
 
 

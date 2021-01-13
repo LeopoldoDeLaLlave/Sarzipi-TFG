@@ -55,7 +55,7 @@ postCtrl.getSubPost = async (req, res) => {
             sort('-createdAt');;
         res.json({ posts });
     } catch (error) {
-        console.log("error");
+        console.log(error);
     }
 
 };
@@ -65,13 +65,15 @@ postCtrl.getSubPost = async (req, res) => {
 postCtrl.getHastagPost = async (req, res) => {
 
     try {
-        const posts = await Post.find({ etiquetas: req.params.etiqueta })
+        
+        const posts = await Post.find({ "etiquetas.text": req.params.etiqueta })
             .populate("postedBy", "_id name")
             .populate("comments.postedBy", "_id name").
             sort('-createdAt');
+
         res.json({ posts });
     } catch (error) {
-        console.log("error");
+        console.log(error);
     }
 
 };

@@ -22,7 +22,7 @@ router.get('/allpost', requireLogin, getAllPost);
 
 router.get('/getsubpost', requireLogin, getSubPost);
 
-router.get('/getrecetashastag/:etiqueta', requireLogin, getSubPost);
+router.get('/getrecetashastag/:etiqueta', requireLogin, getHastagPost);
 
 router.get('/receta/:postid', requireLogin, getOneRecipe);
 
