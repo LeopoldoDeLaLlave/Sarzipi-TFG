@@ -48,10 +48,27 @@ postCtrl.getAllPost = async (req, res) => {
 postCtrl.getSubPost = async (req, res) => {
 
     try {
+        
         const posts = await Post.find({ postedBy: { $in: req.user.following } })
             .populate("postedBy", "_id name")
             .populate("comments.postedBy", "_id name").
             sort('-createdAt');;
+        res.json({ posts });
+    } catch (error) {
+        console.log("error");
+    }
+
+};
+
+
+//Obtiene los posts con una etiqueta
+postCtrl.getHastagPost = async (req, res) => {
+
+    try {
+        const posts = await Post.find({ etiquetas: req.params.etiqueta })
+            .populate("postedBy", "_id name")
+            .populate("comments.postedBy", "_id name").
+            sort('-createdAt');
         res.json({ posts });
     } catch (error) {
         console.log("error");

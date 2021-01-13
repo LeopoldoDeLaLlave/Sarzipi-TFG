@@ -12,7 +12,8 @@ const { createPost,
     deletePost,
     getSubPost,
     deleteComment,
-    getOneRecipe } = require('../controllers/posts.controllers');
+    getOneRecipe,
+    getHastagPost } = require('../controllers/posts.controllers');
 
 
 router.post('/createpost', requireLogin, createPost);
@@ -20,6 +21,8 @@ router.post('/createpost', requireLogin, createPost);
 router.get('/allpost', requireLogin, getAllPost);
 
 router.get('/getsubpost', requireLogin, getSubPost);
+
+router.get('/getrecetashastag/:etiqueta', requireLogin, getSubPost);
 
 router.get('/receta/:postid', requireLogin, getOneRecipe);
 
