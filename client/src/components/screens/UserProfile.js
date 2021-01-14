@@ -8,13 +8,12 @@ import { Helmet } from 'react-helmet';
 
 const UserProfile = () => {
 
-
-
     const [userProfile, setUserProfile] = useState(null);
     const { state, dispatch } = useContext(UserContext);
     const { userid } = useParams();
 
 
+    //En función de si el usuario sigue o no al usuario mostrará el botón de follow o unfollow
     const [showfollow, setShowFollow] = useState(true)
     useEffect(() => {
         setShowFollow(state && !state.following.includes(userid))

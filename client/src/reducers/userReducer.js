@@ -21,5 +21,12 @@ export const reducer = (state, action)=>{
             following:action.payload.following
         }
     }
+    if(action.type==="UPDATEFOLLOWINGHASTAGS"){
+        
+        return {
+            ...state,
+            followingHastags:action.payload.followingHastags
+        }
+    }
     return state;
 };

@@ -120,7 +120,6 @@ otheruserCtrl.followHastag = async(req, res) => {
         }, {
             new: true
         }).select("-password");
-        console.log(followingResult);
         res.json({ result: followingResult })
 
     } catch (error) {

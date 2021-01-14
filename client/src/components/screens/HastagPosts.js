@@ -8,12 +8,15 @@ import { useParams } from 'react-router-dom';
 
 const HastagPosts = () => {
 
-    //Nos indica si la acción de pulsar like está siendo ejecutada en ese momento
     const [data, setData] = useState([]);
     const { state, dispatch } = useContext(UserContext);
     const { etiqueta } = useParams();
 
-
+    //En función de si el usuario sigue o no al usuario mostrará el botón de follow o unfollow
+    const [showfollow, setShowFollow] = useState(true)
+    useEffect(() => {
+        setShowFollow(state && !state.followingHastags.includes(etiqueta))
+    }, state)
 
     useEffect(() => {
 
@@ -43,22 +46,25 @@ const HastagPosts = () => {
             },
         });
 
-        console.log(result);
+        dispatch({ type: "UPDATEFOLLOWINGHASTAGS", payload: { followingHastags: result.data.result.followingHastags } });
+        localStorage.setItem("User", JSON.stringify());
+        setShowFollow(false);
 
-        // dispatch({ type: "UPDATE", payload: { following: result.data.result.following, followers: result.data.result.followers } });
-        // localStorage.setItem("User", JSON.stringify());
+    }
 
-        // setUserProfile((prevState) => {
-        //     return {
-        //         ...prevState,
-        //         user: {
-        //             ...prevState.user,
-        //             followers: [...prevState.user.followers, result.data.result._id]
-        //         }
-        //     }
-        // });
 
-        // setShowFollow(false);
+    const unfollowHastag = async () => {
+        const result = await axios.put(`http://localhost:5000/unfollowhastag`, { etiqueta }, {
+            headers: {
+                //le quitamos las comillas al token
+                'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
+            }
+        });
+
+
+        dispatch({ type: "UPDATEFOLLOWINGHASTAGS", payload: { followingHastags: result.data.result.followingHastags } });
+        localStorage.setItem("User", JSON.stringify());
+        setShowFollow(true);
     }
 
 
@@ -69,11 +75,20 @@ const HastagPosts = () => {
             </Helmet>
 
             <h1 className="titulo">{etiqueta}</h1>
-            <Button style={{ margin: "10px" }}
-                variant="primary"
-                onClick={() => followHastag()}>
-                Seguir
-            </Button>
+            {showfollow ?
+
+                <Button style={{ margin: "10px" }}
+                    variant="primary"
+                    onClick={() => followHastag()}>
+                    Seguir
+                </Button>
+                :
+                <Button style={{ margin: "10px" }}
+                    variant="primary"
+                    onClick={() => unfollowHastag()}>
+                    Unfollow
+                </Button>
+            }
             <br /><br />
             {
                 data.map(item => {

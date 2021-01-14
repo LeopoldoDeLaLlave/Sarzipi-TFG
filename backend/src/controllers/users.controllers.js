@@ -77,8 +77,8 @@ userCtrl.signInUser = async (req, res) => {
 
         if (doMatch) {
             const token = jwt.sign({ id: savedUser._id }, process.env.JSW_SECRET);
-            const { _id, name, email, followers, following, pic } = savedUser;
-            res.json({ token, user: { _id, name, email, followers, following, pic } });
+            const { _id, name, email, followers, following, followingHastags, pic } = savedUser;
+            res.json({ token, user: { _id, name, email, followers, following,followingHastags, pic } });
         } else {
             return res.status(422).json({ "error": "Invalid email or password" });
         }
