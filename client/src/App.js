@@ -30,7 +30,7 @@ const Routing = () => {
   const { state, dispatch } = useContext(UserContext);
 
   //Al cargar la App, si hay una sesión abierta se guarda el usuario
-  //En el UserContext y se envía al tl, si no, se envía al login
+  //en el UserContext y se envía al tl, si no, se envía al login
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {

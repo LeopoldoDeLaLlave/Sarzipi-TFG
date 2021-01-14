@@ -108,17 +108,44 @@ otheruserCtrl.searchUsers = async (req, res) => {
 }
 
 
+
+
 //Sigue una etiqueta
 otheruserCtrl.followHastag = async(req, res) => {
 
     try {
 
         const followingResult = await User.findByIdAndUpdate(req.user._id, {
-            $push: { followingHastags: req.body.etiqueta }
+            $push: { followingHastags: {text: req.body.etiqueta} }
         }, {
             new: true
         }).select("-password");
+        console.log(followingResult);
         res.json({ result: followingResult })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(422).json({ error })
+    }
+}
+
+
+//Da unfollow a una etiqueta
+otheruserCtrl.unfollowHstag = async (req, res) => {
+
+
+
+    try {
+        
+            const unfollowingResult = await User.findByIdAndUpdate(req.user._id, {
+                $pull: { followingHastags: {text: req.body.etiqueta} }
+            }, {
+                new: true
+            }).select("-password");
+            res.json({ result: unfollowingResult })
+       
+
+
 
     } catch (error) {
         return res.status(422).json({ error })

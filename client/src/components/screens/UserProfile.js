@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../App';
-import { Button } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Card} from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet';
 
