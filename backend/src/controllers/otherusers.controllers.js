@@ -91,7 +91,7 @@ otheruserCtrl.putUnfollow = (req, res) => {
 
 
 //Busca usuarios
-otheruserCtrl.searchUsers = async(req, res) => {
+otheruserCtrl.searchUsers = async (req, res) => {
 
 
 
@@ -99,11 +99,29 @@ otheruserCtrl.searchUsers = async(req, res) => {
         let userPattern = new RegExp("^" + req.body.query)
         const _user = await User.find({ email: { $regex: userPattern } })
             .select("_id email");
-        
+
         res.json({ user: _user })
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+
+//Sigue una etiqueta
+otheruserCtrl.followHastag = async(req, res) => {
+
+    try {
+
+        const followingResult = await User.findByIdAndUpdate(req.user._id, {
+            $push: { followingHastags: req.body.etiqueta }
+        }, {
+            new: true
+        }).select("-password");
+        res.json({ result: followingResult })
+
+    } catch (error) {
+        return res.status(422).json({ error })
     }
 }
 

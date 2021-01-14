@@ -220,6 +220,7 @@ const CreatePost = () => {
                     Subir
                 </Button>
             </Form>
+            <br/><br/><br/>
         </div>
 
     )

@@ -22,7 +22,8 @@ const userSchema = new Schema({
         default:"https://res.cloudinary.com/dniykkyhc/image/upload/v1607013402/user_poyqf2.png"
     },
     followers:[{type:ObjectID, ref:"User"}],
-    following:[{type:ObjectID, ref:"User"}]
+    following:[{type:ObjectID, ref:"User"}],
+    followingHastags:[{text:String}]
 
 });
 
