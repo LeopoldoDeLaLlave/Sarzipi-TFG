@@ -8,7 +8,9 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 const NavBar = () => {
 
     const searchModal = useRef(null);
-    const [search, setSearch] = useState('');
+    const searchTab = useRef(null);
+    const [searchUser, setSearchUser] = useState('');
+    const [searchHastag, setSearchHastag] = useState('');
     const [claseNavbar, setclaseNavbar] = useState('');
     const [userDetails, setUserDetails] = useState([]);
     const { state, dispatch } = useContext(UserContext);
@@ -17,6 +19,7 @@ const NavBar = () => {
 
     useEffect(() => {
         M.Modal.init(searchModal.current);
+        M.Tabs.init(searchTab.current);
     }, []);
 
     const renderList = () => {
@@ -51,9 +54,8 @@ const NavBar = () => {
     }
 
     const fetchUSers = async (query) => {
-        setSearch(query);
+        setSearchUser(query);
         const results = await axios.post('http://localhost:5000/search-users', { query });
-        console.log(results);
         setUserDetails(results.data.user);
 
     }
@@ -81,25 +83,59 @@ const NavBar = () => {
                 </Nav>
 
             </Navbar.Collapse>
+
+
+
+
+
             <div id="modal1" className="modal" ref={searchModal} style={{ color: "black" }}>
                 <div className="modal-content">
-                    <input type="text"
-                        placeholder="Search user"
-                        value={search}
-                        onChange={(e) => fetchUSers(e.target.value)}
-                        required />
-                    <ul className="collection">
-                        {userDetails.map(item => {
-                            return <Link to={item._id !== state._id ? "/profile/" + item._id : '/profile'} onClick={() => {
-                                M.Modal.getInstance(searchModal.current).close()
-                                setSearch('')
-                            }}><li key={item._id} className="collection-item">{item.email}</li></Link>
-                        })}
-                    </ul>
-                </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="tabs" ref={searchTab}>
+                                <li class="tab col s3"><a href="#test1">Buscar usuarios</a></li>
+                                <li class="tab col s3"><a href="#test2">Buscar etiquetas</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="test1" class="col s12">
+                            <input type="text"
+                                placeholder="Search user"
+                                value={searchUser}
+                                onChange={(e) => fetchUSers(e.target.value)}
+                                required />
+                            <ul className="collection">
+                                {userDetails.map(item => {
 
+                                    return <Link to={item._id !== state._id ? "/profile/" + item._id : '/profile'} onClick={() => {
+                                        M.Modal.getInstance(searchModal.current).close()
+                                        setSearchUser('')
+                                        setSearchHastag('')
+                                    }}><li key={item._id} className="collection-item">{item.email}</li></Link>
+                                })}
+                            </ul>
+                        </div>
+                        <div id="test2" class="col s12">
+                            <input type="text"
+                                placeholder="Buscar etiqueta"
+                                value={searchHastag}
+                                onChange={(e) => setSearchHastag(e.target.value)} />
+
+                            <Link to={"/recetas/" + searchHastag.toLowerCase()}
+                                onClick={() => {
+                                    M.Modal.getInstance(searchModal.current).close()
+                                    setSearchUser('')
+                                    setSearchHastag('')
+                                }}>
+                                Buscar
+                            </Link>
+                        </div>
+                    </div>
+
+                </div>
                 <div className="modal-footer">
-                    <button className="modal-close waves-effect waves-green btn-flat" onClick={() => setSearch('')}>close</button>
+                    <button className="modal-close waves-effect waves-green btn-flat" onClick={() => setSearchUser('')}>close</button>
                 </div>
             </div>
         </Navbar>
