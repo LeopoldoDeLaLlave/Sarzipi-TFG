@@ -55,7 +55,6 @@ postCtrl.getSubPost = async (req, res) => {
             return obj.text;
         });
 
-        console.log(etiquetas)
         const posts = await Post.find({$or:[{ postedBy: { $in: req.user.following } },{ "etiquetas.text": etiquetas }]})
             .populate("postedBy", "_id name")
             .populate("comments.postedBy", "_id name").

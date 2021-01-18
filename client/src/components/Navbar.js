@@ -122,7 +122,7 @@ const NavBar = () => {
                                 value={searchHastag}
                                 onChange={(e) => setSearchHastag(e.target.value)} />
 
-                            <Link to={"/recetas/" + searchHastag.toLowerCase()}
+                            <Link to={"/recetas/" + searchHastag.toLowerCase().replace(/\s+/g, '')}
                                 onClick={() => {
                                     M.Modal.getInstance(searchModal.current).close()
                                     setSearchUser('')

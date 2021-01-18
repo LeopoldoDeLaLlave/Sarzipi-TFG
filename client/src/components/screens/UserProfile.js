@@ -15,15 +15,13 @@ const UserProfile = () => {
 
     //En función de si el usuario sigue o no al usuario mostrará el botón de follow o unfollow
     const [showfollow, setShowFollow] = useState(true)
-    useEffect(() => {
-        setShowFollow(state && !state.following.includes(userid))
-    }, state)
 
 
     useEffect(() => {
 
 
         const fetch = async () => {
+            console.log("hola");
             const result = await axios.get(`http://localhost:5000/user/${userid}`, {
                 headers: {
                     //le quitamos las comillas al token
@@ -34,7 +32,7 @@ const UserProfile = () => {
         }
 
         fetch();
-    }, [])
+    }, [userid])
 
     const followUser = async () => {
         const result = await axios.put(`http://localhost:5000/follow`, { followId: userid }, {
