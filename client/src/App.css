@@ -106,5 +106,9 @@ i{
   text-align: center;
 }
 
+.modal-footer{
+  background-color: aquamarine;
+  max-height: 5%;
+}
 
 

@@ -93,8 +93,8 @@ const NavBar = () => {
                     <div class="row">
                         <div class="col s12">
                             <ul class="tabs" ref={searchTab}>
-                                <li class="tab col s3"><a href="#test1">Buscar usuarios</a></li>
-                                <li class="tab col s3"><a href="#test2">Buscar etiquetas</a></li>
+                                <li class="tab col s6 "><a  href="#test1">Buscar usuarios</a></li>
+                                <li class="tab col s6 "><a  href="#test2">Buscar etiquetas</a></li>
                             </ul>
                         </div>
                     </div>
@@ -122,7 +122,8 @@ const NavBar = () => {
                                 value={searchHastag}
                                 onChange={(e) => setSearchHastag(e.target.value)} />
 
-                            <Link to={"/recetas/" + searchHastag.toLowerCase().replace(/\s+/g, '')}
+                            <Link type="button" class="btn btn-primary"
+                                to={"/recetas/" + searchHastag.toLowerCase().replace(/\s+/g, '')}
                                 onClick={() => {
                                     M.Modal.getInstance(searchModal.current).close()
                                     setSearchUser('')
@@ -134,10 +135,16 @@ const NavBar = () => {
                     </div>
 
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer"
+                    style={{maxHeight: "5%"}}>
                     <button className="modal-close waves-effect waves-green btn-flat" onClick={() => setSearchUser('')}>close</button>
                 </div>
             </div>
+
+
+
+
+            
         </Navbar>
 
 

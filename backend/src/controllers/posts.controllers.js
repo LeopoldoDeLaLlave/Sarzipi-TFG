@@ -50,12 +50,12 @@ postCtrl.getSubPost = async (req, res) => {
 
     try {
         //Guardamos las etiquetas que sigue el usuario
-        var etiquetas = req.user.followingHastags.map((obj)=>{
-            
+        var etiquetas = req.user.followingHastags.map((obj) => {
+
             return obj.text;
         });
 
-        const posts = await Post.find({$or:[{ postedBy: { $in: req.user.following } },{ "etiquetas.text": etiquetas }]})
+        const posts = await Post.find({ $or: [{ postedBy: { $in: req.user.following } }, { "etiquetas.text": etiquetas }] })
             .populate("postedBy", "_id name")
             .populate("comments.postedBy", "_id name").
             sort('-createdAt');
@@ -71,7 +71,7 @@ postCtrl.getSubPost = async (req, res) => {
 postCtrl.getHastagPost = async (req, res) => {
 
     try {
-        
+
         const posts = await Post.find({ "etiquetas.text": req.params.etiqueta })
             .populate("postedBy", "_id name")
             .populate("comments.postedBy", "_id name").
@@ -89,7 +89,9 @@ postCtrl.getUsersPosts = async (req, res) => {
 
     try {
 
-        const myPosts = await Post.find({ postedBy: req.user._id }).populate("postedBy", "_id name");
+        const myPosts = await Post.find({ postedBy: req.user._id }).
+            populate("postedBy", "_id name").
+            sort('-createdAt');;
         res.json({ myPosts });
 
     } catch (error) {
@@ -247,13 +249,13 @@ postCtrl.deleteComment = async (req, res) => {
 //Consigue una receta concreta
 postCtrl.getOneRecipe = async (req, res) => {
 
-    
+
     try {
         const receta = await Post.findById(req.params.postid)
-        .populate("comments.postedBy", "_id name")
-        .populate("postedBy", "_id name");
-        res.json({receta});
-        
+            .populate("comments.postedBy", "_id name")
+            .populate("postedBy", "_id name");
+        res.json({ receta });
+
     } catch (error) {
         console.log(error);
         return res.status(200).json({ error: "No se pudo obtener la receta" })

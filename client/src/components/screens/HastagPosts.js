@@ -74,22 +74,49 @@ const HastagPosts = () => {
                 <title>Recetas: {etiqueta}</title>
             </Helmet>
 
-            <h1 className="titulo">{etiqueta}</h1>
-            {showfollow ?
 
-                <Button style={{ margin: "10px" }}
-                    variant="primary"
-                    onClick={() => followHastag()}>
-                    Seguir
-                </Button>
-                :
-                <Button style={{ margin: "10px" }}
-                    variant="primary"
-                    onClick={() => unfollowHastag()}>
-                    Unfollow
-                </Button>
-            }
-            <br /><br />
+
+            <div style={{
+                margin: "18px 0px",
+                padding: "10px",
+                borderBottom: "1px solid grey"
+            }}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-around"
+                }}>
+                    <div>
+                        <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
+                            src={data[0] ? data[0].photo : "https://res.cloudinary.com/dniykkyhc/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1610974743/lg7gasjkzkirrrjmdmhs.png"} />
+                    </div>
+
+                    <div>
+                        <h4>{etiqueta}</h4>
+                        <h5>{data.length} {data.length==1?"publicación":"publicaciones"}</h5>
+                    </div>
+                    <div>
+                        {showfollow ?
+
+                            <Button style={{ margin: "10px" }}
+                                variant="primary"
+                                onClick={() => followHastag()}>
+                                Seguir
+                            </Button>
+                            :
+                            <Button style={{ margin: "10px" }}
+                                variant="primary"
+                                onClick={() => unfollowHastag()}>
+                                Unfollow
+                            </Button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            
+
+
+            <br />
             {
                 data.map(item => {
                     return (
