@@ -26,6 +26,7 @@ const Profile = () => {
                 },
             })
             setMyPics(result.data.myPosts);
+            setBio(state.bio);
         }
 
         fetch();
@@ -139,7 +140,10 @@ const Profile = () => {
                         <div style={{
 
                         }}>
-                            <button onClick={() => setEditandoBio(true)}>editar bio</button>
+                            <button onClick={() => {
+                                setEditandoBio(!editandoBio)
+                                setBio(state.bio);}}>
+                                    editar bio</button>
                         </div>
                     </div>
 
