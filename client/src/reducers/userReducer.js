@@ -14,6 +14,12 @@ export const reducer = (state, action)=>{
             pic:action.payload.pic
         };
     }
+    if(action.type==="UPDATEBIO"){
+        return {
+            ...state,
+            bio:action.payload.bio
+        };
+    }
     if(action.type==="UPDATE"){
         return {
             ...state,

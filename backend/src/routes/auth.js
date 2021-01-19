@@ -6,7 +6,8 @@ const requireLogin = require('../middlewares/requireLogin');
 const { signInUser,
     signUpUser,
     accesToProtected,
-    updatePic } = require('../controllers/users.controllers');
+    updatePic,
+    updateBio } = require('../controllers/users.controllers');
 
 
 router.route('/signin').
@@ -24,6 +25,8 @@ router.get('/protected', requireLogin, (req, res) => {
 });
 
 router.put('/updatepic', requireLogin, updatePic);
+
+router.put('/updatebio', requireLogin, updateBio);
 
 
 module.exports = router;

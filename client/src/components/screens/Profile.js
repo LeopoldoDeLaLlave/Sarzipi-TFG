@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Card } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App';
 import { Helmet } from 'react-helmet';
@@ -9,8 +9,11 @@ const Profile = () => {
 
 
     const [myPics, setMyPics] = useState([]);
+    //Esta variable nos indica si se está editando la biografía del usuario
+    const [editandoBio, setEditandoBio] = useState(false);
     const { state, dispatch } = useContext(UserContext);
     const [profileImage, setProfileImage] = useState("");
+    const [bio, setBio] = useState("");
 
     useEffect(() => {
 
@@ -56,10 +59,28 @@ const Profile = () => {
         }
     }, [profileImage]);
 
+    //Actualiza la foto de perfil
     const updatePhoto = (file) => {
         setProfileImage(file);
 
     }
+
+    //Actualiza la biografía
+    const updateBio = (e) => {
+        
+        axios.put('http://localhost:5000/updatebio', { bio}, {
+            headers: {
+                //le quitamos las comillas al token
+                'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
+            }
+        }).then((res) => {
+            localStorage.setItem("user", JSON.stringify({ ...state, bio: res.data.bio }));
+            dispatch({ type: "UPDATEBIO", payload: res.data.bio });
+            window.location.reload();
+        })
+        setEditandoBio(false);
+    }
+
 
     return (
         <div style={{ maxWidth: "80%", margin: "0px auto" }}>
@@ -75,6 +96,7 @@ const Profile = () => {
                     display: "flex",
                     justifyContent: "space-around"
                 }}>
+                    
                     <div>
                         <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
                             src={state ? state.pic : "loading..."} />
@@ -85,13 +107,43 @@ const Profile = () => {
                         <div style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            width: "108%"
+                            width: "30%"
                         }}>
                             <h6>{myPics.length} posts</h6>
                             <h6>{state ? state.followers.length : "0"} followers</h6>
                             <h6>{state ? state.following.length : "0"} following</h6>
                         </div>
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%"
+                        }}>
+                            {editandoBio ?
+                                <Form onSubmit={(e) => updateBio(e)}>
+
+                                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                                        <Form.Control as="textarea" rows={3}
+                                            value={bio}
+                                            onChange={(e) => setBio(e.target.value)} />
+                                    </Form.Group>
+
+                                    <Button variant="primary" type="submit">
+                                        Actualizar
+                                </Button>
+
+                                </Form>
+                                :
+                                <p>{state.bio}</p>
+                            }
+                        </div>
+                        <div style={{
+
+                        }}>
+                            <button onClick={() => setEditandoBio(true)}>editar bio</button>
+                        </div>
                     </div>
+
+
                 </div>
                 <div className="file-field input-field">
                     <div className="btn #64b5f6 blue darken-1">

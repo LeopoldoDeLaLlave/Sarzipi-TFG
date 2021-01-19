@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 const UserProfile = () => {
 
     const [userProfile, setUserProfile] = useState(null);
+
     const { state, dispatch } = useContext(UserContext);
     const { userid } = useParams();
 
@@ -21,7 +22,7 @@ const UserProfile = () => {
 
 
         const fetch = async () => {
-            console.log("hola");
+            
             const result = await axios.get(`http://localhost:5000/user/${userid}`, {
                 headers: {
                     //le quitamos las comillas al token
@@ -32,7 +33,7 @@ const UserProfile = () => {
         }
 
         fetch();
-    }, [userid])
+    }, userid)
 
     const followUser = async () => {
         const result = await axios.put(`http://localhost:5000/follow`, { followId: userid }, {
@@ -129,6 +130,13 @@ const UserProfile = () => {
                                     Unfollow
                                     </Button>
                             }
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                width: "100%"
+                            }}>
+                                <p>{userProfile.user.bio} </p>
+                            </div>
                         </div>
                     </div>
 

@@ -38,6 +38,7 @@ userCtrl.signUpUser = async (req, res) => {
         const user = new User({
             name,
             email,
+            bio:"",
             password: hashedPassword,
             pic
         });
@@ -77,8 +78,8 @@ userCtrl.signInUser = async (req, res) => {
 
         if (doMatch) {
             const token = jwt.sign({ id: savedUser._id }, process.env.JSW_SECRET);
-            const { _id, name, email, followers, following, followingHastags, pic } = savedUser;
-            res.json({ token, user: { _id, name, email, followers, following,followingHastags, pic } });
+            const { _id, name, email, bio, followers, following, followingHastags, pic } = savedUser;
+            res.json({ token, user: { _id, name, email, bio, followers, following,followingHastags, pic } });
         } else {
             return res.status(422).json({ "error": "Invalid email or password" });
         }
@@ -94,6 +95,18 @@ userCtrl.updatePic = async (req, res) => {
             if (err) {
                 console.log(err);
                 return res.status(422).json({ error: "pic can not post" })
+            }
+            res.json(result);
+        });
+};
+
+//Actualiza la biografia de un usuario
+userCtrl.updateBio = async (req, res) => {
+    User.findByIdAndUpdate(req.user._id, { $set: { bio: req.body.bio } }, { new: true },
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(422).json({ error: "bio can not post" })
             }
             res.json(result);
         });

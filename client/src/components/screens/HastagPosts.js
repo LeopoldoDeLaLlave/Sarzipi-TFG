@@ -35,7 +35,7 @@ const HastagPosts = () => {
         fetchData();
 
 
-    }, [etiqueta])
+    }, etiqueta)
 
 
     const followHastag = async () => {
