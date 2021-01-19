@@ -112,7 +112,7 @@ const NavBar = () => {
                                         M.Modal.getInstance(searchModal.current).close()
                                         setSearchUser('')
                                         setSearchHastag('')
-                                    }}><li key={item._id} className="collection-item">{item.email}</li></Link>
+                                    }}><li key={item._id} className="collection-item">{item.name}</li></Link>
                                 })}
                             </ul>
                         </div>

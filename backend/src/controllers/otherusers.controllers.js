@@ -97,8 +97,8 @@ otheruserCtrl.searchUsers = async (req, res) => {
 
     try {
         let userPattern = new RegExp("^" + req.body.query)
-        const _user = await User.find({ email: { $regex: userPattern } })
-            .select("_id email");
+        const _user = await User.find({ name: { $regex: userPattern } })
+            .select("_id name");
 
         res.json({ user: _user })
 
