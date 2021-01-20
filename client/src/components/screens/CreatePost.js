@@ -79,7 +79,6 @@ const CreatePost = () => {
                 materialize.toast({ html: "Created post", classes: "##69f0ae green accent-2" });
                 history.push('/');
             }, (error) => {
-                console.log("hola");
                 console.log(error.response);
                 materialize.toast({ html: error.response.data.error, classes: "#b71c1c red darken-4" });
 

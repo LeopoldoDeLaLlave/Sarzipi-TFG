@@ -27,8 +27,8 @@ const Signup = () => {
 
     const uploadFields = () => {
         const newUser = {
-            name,
-            email,
+            name: name.replace(/\s/g, '').toLowerCase(),
+            email: email.replace(/\s/g, '').toLowerCase(),
             password,
             pic: url
         };
