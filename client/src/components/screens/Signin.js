@@ -19,11 +19,11 @@ const Signin = () => {
     const [email, setEmail] = useState("");
     const postData = async (e) => {
         e.preventDefault();
-        const newUser = {
+        const user = {
             email,
             password
         };
-        axios.post('http://localhost:5000/signin', newUser).then((response) => {
+        axios.post('http://localhost:5000/signin', user).then((response) => {
             localStorage.setItem("jwt", JSON.stringify(response.data.token));
             localStorage.setItem("user", JSON.stringify(response.data.user));
             //Al hacer login ponemos en el context el usuario

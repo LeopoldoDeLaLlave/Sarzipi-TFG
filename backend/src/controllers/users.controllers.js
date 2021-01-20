@@ -102,6 +102,10 @@ userCtrl.updatePic = async (req, res) => {
 
 //Actualiza la biografia de un usuario
 userCtrl.updateBio = async (req, res) => {
+
+    if(req.body.bio.length > 140){
+        return res.status(422).json({ "error": "please add email or password" });
+    }
     User.findByIdAndUpdate(req.user._id, { $set: { bio: req.body.bio } }, { new: true },
         (err, result) => {
             if (err) {

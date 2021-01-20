@@ -26,7 +26,7 @@ const Profile = () => {
                 },
             })
             setMyPics(result.data.myPosts);
-            
+
         }
 
         fetch();
@@ -37,10 +37,10 @@ const Profile = () => {
     useEffect(() => {
 
 
-        if(state){
+        if (state) {
             setBio(state.bio)
         }
-        
+
 
     }, state)
 
@@ -87,10 +87,13 @@ const Profile = () => {
                 //le quitamos las comillas al token
                 'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
             }
-        }).then((res) => {
-            localStorage.setItem("user", JSON.stringify({ ...state, bio: res.data.bio }));
-            dispatch({ type: "UPDATEBIO", payload: res.data.bio });
-            window.location.reload();
+        }).then((res, err) => {
+            if (!err) {
+                localStorage.setItem("user", JSON.stringify({ ...state, bio: res.data.bio }));
+                dispatch({ type: "UPDATEBIO", payload: res.data.bio });
+                window.location.reload();
+            }
+
         })
         setEditandoBio(false);
     }
@@ -138,7 +141,8 @@ const Profile = () => {
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
                                         <Form.Control as="textarea" rows={3}
                                             value={bio}
-                                            onChange={(e) => setBio(e.target.value)} />
+                                            onChange={(e) => setBio(e.target.value)}
+                                            maxlength="140" />
                                     </Form.Group>
 
                                     <Button variant="primary" type="submit">
