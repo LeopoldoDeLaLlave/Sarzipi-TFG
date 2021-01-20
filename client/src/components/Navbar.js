@@ -54,8 +54,8 @@ const NavBar = () => {
     }
 
     const fetchUSers = async (query) => {
-        setSearchUser(query);
-        const results = await axios.post('http://localhost:5000/search-users', { query });
+        setSearchUser(query.toLowerCase());
+        const results = await axios.post('http://localhost:5000/search-users', { query :query.toLowerCase() });
         setUserDetails(results.data.user);
 
     }
