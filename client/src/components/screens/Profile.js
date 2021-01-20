@@ -26,11 +26,24 @@ const Profile = () => {
                 },
             })
             setMyPics(result.data.myPosts);
-            setBio(state.bio);
+            
         }
 
         fetch();
+
     }, [])
+
+
+    useEffect(() => {
+
+
+        if(state){
+            setBio(state.bio)
+        }
+        
+
+    }, state)
+
 
     useEffect(() => {
 
@@ -68,8 +81,8 @@ const Profile = () => {
 
     //Actualiza la biografía
     const updateBio = (e) => {
-        
-        axios.put('http://localhost:5000/updatebio', { bio}, {
+
+        axios.put('http://localhost:5000/updatebio', { bio }, {
             headers: {
                 //le quitamos las comillas al token
                 'Authorization': "Bearer " + localStorage.getItem("jwt").slice(1, -1)
@@ -97,7 +110,7 @@ const Profile = () => {
                     display: "flex",
                     justifyContent: "space-around"
                 }}>
-                    
+
                     <div>
                         <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
                             src={state ? state.pic : "loading..."} />
@@ -134,7 +147,7 @@ const Profile = () => {
 
                                 </Form>
                                 :
-                                <p>{state.bio}</p>
+                                <p>{state ? state.bio : "Loading..."}</p>
                             }
                         </div>
                         <div style={{
@@ -142,8 +155,9 @@ const Profile = () => {
                         }}>
                             <button onClick={() => {
                                 setEditandoBio(!editandoBio)
-                                setBio(state.bio);}}>
-                                    editar bio</button>
+                                setBio(state.bio);
+                            }}>
+                                editar bio</button>
                         </div>
                     </div>
 
