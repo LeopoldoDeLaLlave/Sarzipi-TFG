@@ -3,6 +3,7 @@ const userCtrl = {};
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const UnconfirmedUser = require('../models/uncomfirmedUser');
 
 const nodemailer = require('nodemailer');
 
@@ -17,11 +18,12 @@ var transporter = nodemailer.createTransport({
 
 //Crea un objeto con la opciones del mail
 class mailOptions {
-    constructor(_to, name) {
+    constructor(_to, name, link) {
         this.from = 'sarzipicr@gmail.com';
         this.to = _to;
         this.subject = 'Registro en Sarzipi';
-        this.html= '<h1>Bienvenido '+ name +'!</h1><p>Gracias por registrarte</p>'
+        this.html = '<h1>Bienvenido ' + name + '!</h1><p>Gracias por registrarte</p>' +
+            '<p>Pulsa el siguiente link para confirmar tu registro: ' + link + '</p>'
     }
 }
 
@@ -39,24 +41,26 @@ userCtrl.signUpUser = async (req, res) => {
         //Comprobamos si el mail o el nombre ya está registrado
         const savedUser = await User.findOne({ name });
         const savedMail = await User.findOne({ email });
+        const savedUnconfirmedUser = await UnconfirmedUser.findOne({ name });
+        const savedUnconfirmedMail = await UnconfirmedUser.findOne({ email });
 
-        if (savedUser || savedMail) {
+        if (savedUser || savedMail || savedUnconfirmedUser || savedUnconfirmedMail) {
             return res.status(422).json({ "error": "usuario ya registrado" });
         }
         //Protegemos la contraseña
         hashedPassword = await bcrypt.hash(password, 12);
         //Creamos el nuevo usuario
-        const user = new User({
+        const unconfirmedUser = new UnconfirmedUser({
             name,
             email,
-            bio: "",
             password: hashedPassword,
             pic
         });
 
         try {
-            await user.save(user.email);
-            transporter.sendMail(new mailOptions(user.email, user.name)).
+            await unconfirmedUser.save(unconfirmedUser.email);
+            const link = 'http://localhost:3000/confirmuser/' + unconfirmedUser._id;
+            transporter.sendMail(new mailOptions(unconfirmedUser.email, unconfirmedUser.name, link)).
                 then((error, info) => {
                     if (error) {
                         console.log(error);
@@ -74,6 +78,62 @@ userCtrl.signUpUser = async (req, res) => {
         return res.status(422).json({ error });
     }
 };
+
+
+
+//Confirma desde el email una cuenta registrada
+userCtrl.confirmAccount = async (req, res) => {
+    const unconfirmedUser = await UnconfirmedUser.findOne({ _id: req.params.id });
+
+
+    if (!unconfirmedUser) {
+        return res.status(404).json({ "error": "User not found" });
+    }
+
+    try {
+
+        //Creamos el nuevo usuario en la tabla usuarios
+        const user = new User({
+            name: unconfirmedUser.name,
+            email: unconfirmedUser.email,
+            bio: "",
+            password: unconfirmedUser.password,
+            pic: unconfirmedUser.pic
+        });
+        try {
+            await user.save(user.email);
+
+
+            //Una vez guardado el usuario en la tabla de usuarios confirmados lo eliminamos de la 
+            //tabla de usuarios sin confirmar
+            try {
+                UnconfirmedUser.findOne({ _id: unconfirmedUser._id }).
+                    exec(async (err, userToDelete) => {
+                        if (err || !userToDelete) {
+                            return res.status(422).json({ error: err })
+                        }
+
+                        const result = await userToDelete.remove();
+                        res.json(result)
+                    });
+
+
+            } catch (error) {
+                console.log(error);
+            }
+
+            res.json({ "message": "saved succesfully" });
+        } catch (error) {
+            console.log(error);
+            return res.status(422).json({ error });
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(422).json({ error });
+    }
+};
+
 
 //Apertura de sesión de usuarios ya registrados
 userCtrl.signInUser = async (req, res) => {
@@ -132,28 +192,7 @@ userCtrl.updateBio = async (req, res) => {
 };
 
 
-//Confirma desde el email una cuenta registrada
-userCtrl.confirmAccount = async (req, res) => {
 
-    const user = await User.findOne({ _id: req.params.id }).select("-password");
-
-    if(!user){
-        return res.status(404).json({ "error": "User not found" });
-    }
-    if(user.isConfirmed){
-        return res.status(422).json({ "error": "User is already confirmed" });
-    }
-
-
-    User.findByIdAndUpdate(user._id, { $set: { isRequired: true } }, { new: true },
-        (err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(422).json({ error: "USer can not be confirmed" })
-            }
-            res.json(result);
-        });
-};
 
 
 userCtrl.accesToProtected = async (req, res) => {
