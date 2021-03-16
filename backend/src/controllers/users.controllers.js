@@ -103,6 +103,7 @@ userCtrl.signInUser = async (req, res) => {
 };
 
 
+//Actuliza la foto de pérfil del usuario
 userCtrl.updatePic = async (req, res) => {
     User.findByIdAndUpdate(req.user._id, { $set: { pic: req.body.pic } }, { new: true },
         (err, result) => {
@@ -125,6 +126,30 @@ userCtrl.updateBio = async (req, res) => {
             if (err) {
                 console.log(err);
                 return res.status(422).json({ error: "bio can not post" })
+            }
+            res.json(result);
+        });
+};
+
+
+//Confirma desde el email una cuenta registrada
+userCtrl.confirmAccount = async (req, res) => {
+
+    const user = await User.findOne({ _id: req.params.id }).select("-password");
+
+    if(!user){
+        return res.status(404).json({ "error": "User not found" });
+    }
+    if(user.isConfirmed){
+        return res.status(422).json({ "error": "User is already confirmed" });
+    }
+
+
+    User.findByIdAndUpdate(user._id, { $set: { isRequired: true } }, { new: true },
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(422).json({ error: "USer can not be confirmed" })
             }
             res.json(result);
         });

@@ -7,7 +7,8 @@ const { signInUser,
     signUpUser,
     accesToProtected,
     updatePic,
-    updateBio } = require('../controllers/users.controllers');
+    updateBio,
+    confirmAccount } = require('../controllers/users.controllers');
 
 
 router.route('/signin').
@@ -27,6 +28,9 @@ router.get('/protected', requireLogin, (req, res) => {
 router.put('/updatepic', requireLogin, updatePic);
 
 router.put('/updatebio', requireLogin, updateBio);
+
+
+router.put('/confirmaccount/:id', confirmAccount);
 
 
 module.exports = router;

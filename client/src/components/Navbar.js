@@ -61,7 +61,7 @@ const NavBar = () => {
     }
 
     //Cambia la clase del navbar para que al desplegarse el navegador cuando
-    //la pantalla es pequeña se vea geis
+    //la pantalla es pequeña se vea gris
 
     const cambiaClase = () => {
         if (claseNavbar == "") {

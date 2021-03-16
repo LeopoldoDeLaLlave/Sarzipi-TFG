@@ -22,6 +22,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    isConfirmed:{
+        type: Boolean,
+        required: true,
+        default: false
+    },
     pic:{
         type:String,
         default:"https://res.cloudinary.com/dniykkyhc/image/upload/v1607013402/user_poyqf2.png"
