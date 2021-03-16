@@ -87,7 +87,7 @@ userCtrl.confirmAccount = async (req, res) => {
 
 
     if (!unconfirmedUser) {
-        return res.status(404).json({ "error": "User not found" });
+        return res.json({ "error": "Usuario no disponible para comfirmar" });
     }
 
     try {
@@ -114,7 +114,7 @@ userCtrl.confirmAccount = async (req, res) => {
                         }
 
                         const result = await userToDelete.remove();
-                        res.json(result)
+                        res.json({ "message": "saved succesfully" });
                     });
 
 
