@@ -34,5 +34,5 @@ export const reducer = (state, action)=>{
             followingHastags:action.payload.followingHastags
         }
     }
-    return state;
+    return state; 
 };
